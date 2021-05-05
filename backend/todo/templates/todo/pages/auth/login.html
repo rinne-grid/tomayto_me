@@ -1,0 +1,64 @@
+{% extends "todo/pages/base.html" %}
+{% load static %}
+{% block title %}ログイン - TomaytoMe{% endblock %}
+
+{# header: 何も表示しない #}
+{% block header %}
+{% endblock %}
+
+{% block contents %}
+    <form class="column is-two-fifths is-offset-4" action="{% url 'todo:app_login' %}" method="post">
+        <div class="card">
+            <div class="card-content">
+                <div class="container">
+                    <div class="columns is-centered">
+                        <div class="column is-half">
+                            <img src="{% static 'todo/image/logo.png' %}" width="280" height="140">
+                        </div>
+                    </div>
+                </div>
+            {% if form.non_field_errors %}
+                <div class="message is-danger">
+                    <div class="message-body">
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+                <!-- メールアドレス -->
+                <div class="field">
+                    <p class="control has-icons-left">
+                        {{ form.username }}
+{#                        <input class="input" type="text" name="username" placeholder="ユーザ名">#}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </p>
+                </div>
+                <!-- パスワード -->
+                <div class="field">
+                    <p class="control has-icons-left">
+                        {{ form.password }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-key"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="button is-primary" type="submit" value="ログイン">
+                    </p>
+                </div>
+            </div>
+            <div class="section">
+                <a href="{% url 'todo:app_user_register' %}">新規登録はこちら</a>
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+{% endblock %}
+
+{# footer：何も表示しない #}
+{% block footer %}
+{% endblock %}

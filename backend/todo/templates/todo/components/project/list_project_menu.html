@@ -1,0 +1,17 @@
+<div class="column is-one-fifth">
+    <aside class="menu m-2">
+        <p class="menu-label">
+            Menu
+        </p>
+        <ul class="menu-list">
+            <li>
+                <a class="is-active">プロジェクト</a>
+                <ul>
+                    {% for project in project_list %}
+                    <li><a>{{ project.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>

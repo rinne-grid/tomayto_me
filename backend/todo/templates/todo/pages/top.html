@@ -1,0 +1,28 @@
+{% extends "todo/pages/base.html" %}
+{% load static %}
+
+{% block title %}トップページ - TomaytoMe{% endblock %}
+
+{% block navbar_item %}
+{# プロジェクト作成モーダル #}
+{% include "todo/components/project/create_project.html" %}
+{% endblock %}
+
+
+<!-- メニュー -->
+{% block side_menu %}
+<div class="columns">
+    {% include "todo/components/project/list_project_menu.html" %}
+{% endblock %}
+
+<!-- コンテンツ -->
+{% block contents %}
+    {% include "todo/components/project/list_project_card.html" %}
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'todo/js/common/modal_operations.js' %}"></script>
+<script src="{% static 'todo/js/common/date_operations.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    {# FontAwesome #}
+    {% include "todo/components/common/load_font_awesome_style.html" %}
+
+    {# bulma #}
+    {% include "todo/components/common/load_bulma_style.html" %}
+
+    {# bulma-calendar.css #}
+    {% include "todo/components/common/load_bulma-calendar_style.html" %}
+
+    {# font settings #}
+    {% include "todo/components/common/load_font_style.html" %}
+
+    {# jkanban.css #}
+    {% include "todo/components/common/load_jkanban_style.html" %}
+
+    <link rel="icon" type="image/png" href="{% static 'todo/image/logo_icon.ico' %}">
+    <style>
+    * {
+        font-family: 'Kosugi', sans-serif;
+    }
+    .navbar-item img{
+        max-height: none;
+    }
+    </style>
+
+</head>
+<body>
+    {% block header %}
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand ml-6 mt-4">
+            {% if user.is_authenticated %}
+            <a class="navbar-item" href="{% url 'todo:app_top' %}">
+                <img src="{% static 'todo/image/logo.png' %}" width="240">
+            </a>
+            {% else %}
+            <a class="navbar-item" href="{% url 'todo:app_index' %}">
+                <img src="{% static 'todo/image/logo.png' %}" width="240">
+            </a>
+            {% endif %}
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+{% block navbar_item %}
+{#        <div id="navbarBasicExample" class="navbar-menu">#}
+{#            <div class="navbar-start">#}
+{#                <a class="navbar-item">#}
+{#                    Home#}
+{#                </a>#}
+{##}
+{#                <a class="navbar-item">#}
+{#                    Documentation#}
+{#                </a>#}
+{##}
+{#                <div class="navbar-item has-dropdown is-hoverable">#}
+{#                    <a class="navbar-link">#}
+{#                        More#}
+{#                    </a>#}
+{##}
+{#                    <div class="navbar-dropdown">#}
+{#                        <a class="navbar-item">#}
+{#                            About#}
+{#                        </a>#}
+{#                        <a class="navbar-item">#}
+{#                            Jobs#}
+{#                        </a>#}
+{#                        <a class="navbar-item">#}
+{#                            Contact#}
+{#                        </a>#}
+{#                        <hr class="navbar-divider">#}
+{#                        <a class="navbar-item">#}
+{#                            Report an issue#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{% endblock %}
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {% if user.is_authenticated %}
+                        <a class="button is-light" href="{% url 'todo:app_logout' %}">
+                            ログアウト
+                        </a>
+                        {% else %}
+                        <a class="button is-primary" href="{% url 'todo:app_user_register' %}">
+                            <strong>新規登録</strong>
+                        </a>
+                        <a class="button is-light is-link" href="{% url 'todo:app_login' %}">
+                            ログイン
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% block side_menu %}
+    {% endblock %}
+    {% block contents %}
+    {% endblock %}
+
+    {# cash.js #}
+    {% include "todo/components/common/load_cash_script.html" %}
+
+    {# bulma-calendar.js #}
+    {% include "todo/components/common/load_bulma-calendar_script.html" %}
+
+    {# jkanban.js #}
+    {% include "todo/components/common/load_jkanban_script.html" %}
+
+    {% block script %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,103 @@
+{% extends "todo/pages/base.html" %}
+{% block title %}TomaytoMe - タスク管理{% endblock %}
+{% block contents %}
+<style>
+
+.bd-fat-button {
+    font-size: 1.8em;
+}
+
+</style>
+    <div class="container">
+        <section class="hero">
+        <div class="hero-body">
+            <p class="title">タスクを自由に管理しよう</p>
+            <p class="subtitle">いままでのタスク管理とは一味も違わない、単なるTODOアプリ。Djangoを振り返るために作成。これといって目立った機能はなく、単純なTODOの作成すらない</p>
+        </div>
+
+        </section>
+        <div class="bd-docs-body">
+            <div class="card">
+                <div class="card-content">
+                    <nav class="level">
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">何らかの数</p>
+                          <p class="title">3,456</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">何らかの数</p>
+                          <p class="title">123</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">何らかの数</p>
+                          <p class="title">456K</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">何らかの数</p>
+                          <p class="title">789</p>
+                        </div>
+                      </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <a class="button bd-fat-button is-primary" href="{% url 'todo:app_user_register' %}">
+            <span>さっそく使ってみる</span></a>
+
+        </div>
+<div class="tile is-ancestor">
+  <div class="tile is-vertical is-8">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-info">
+          <p class="title">左側です</p>
+          <p class="subtitle">アプリーーーーーーーー</p>
+        </article>
+        <article class="tile is-child notification is-info">
+          <p class="title">左下です</p>
+          <p class="subtitle">わかりません</p>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">中央いただきました</p>
+          <p class="subtitle">サンプル</p>
+          <figure class="image is-4by3">
+
+          </figure>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-info">
+        <p class="title">TODO</p>
+        <p class="subtitle">TODO、TODO</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child notification is-info">
+      <div class="content">
+        <p class="title">皆様の声</p>
+        <p class="subtitle">来ていない。。</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+    </div>
+
+{% endblock %}
