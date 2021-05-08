@@ -1,2 +1,31 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'todo/css/jkanban.min.css' %}">
+<style>
+.kanban-board-header {
+    display: flex;
+    justify-content: center;
+    background-color: #FFF;
+}
+
+.kanban-board-header button {
+    margin-left: 12px;
+}
+
+.kanban-title-board {
+    font-size: 1.6rem;
+}
+
+.kanban-board {
+    background-color: #FFF;
+    border-right: 1px solid #aaa;
+}
+.kanban-board:last-child {
+    border: none;
+}
+
+.kanban-item {
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+
+</style>

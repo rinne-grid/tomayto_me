@@ -15,9 +15,24 @@
 {% endblock %}
 
 {% block contents %}
-<div class="m-4">
-<h1>説明</h1>
-<pre>{{ current_project.explain }}</pre>
+{% include "todo/components/task/create_task.html" %}
 
+<div class="column">
+    <div class="m-4 columns">
+        <div class="column is-full">
+            <div class="column">
+                <h1>説明</h1>
+                <pre>{{ current_project.explain }}</pre>
+            </div>
+            <div class="column" id="kanban">
+
+            </div>
+
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'todo/js/task/task_operations.js' %}"></script>
 {% endblock %}

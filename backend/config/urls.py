@@ -22,6 +22,7 @@ from config import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("todo/", include("todo.urls")),
+    path("api/", include("api.urls")),
 ]
 
 if settings.DEBUG:

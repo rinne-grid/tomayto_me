@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     "todo.apps.TodoConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
+    "django_extensions",
 ]
 
 
@@ -152,9 +155,42 @@ SESSION_REDIS = {
 
 AUTH_USER_MODEL = "todo.AppUser"
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "logs/debug.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django.db": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
 
 if DEBUG:
     import mimetypes
 
     mimetypes.add_type("application/javascript", ".js", True)
     INTERNAL_IPS = ["127.0.0.1"]
+
+    # django_extensions shell_plus
+    # python manage.py shell_plus --print-sql
+    SHELL_PLUS_PRINT_SQL = True

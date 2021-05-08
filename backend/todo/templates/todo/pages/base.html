@@ -113,6 +113,9 @@
     {% block contents %}
     {% endblock %}
 
+    {# axios.js #}
+    {% include "todo/components/common/load_axios_script.html" %}
+
     {# cash.js #}
     {% include "todo/components/common/load_cash_script.html" %}
 
@@ -122,6 +125,11 @@
     {# jkanban.js #}
     {% include "todo/components/common/load_jkanban_script.html" %}
 
+    {# modal_operations.js #}
+    <script src="{% static 'todo/js/common/modal_operations.js' %}"></script>
+
+    {# consts.js #}
+    <script src="{% static 'todo/js/common/consts.js' %}"></script>
     {% block script %}
     {% endblock %}
 </body>
