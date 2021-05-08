@@ -1,0 +1,38 @@
+{% extends "todo/pages/top.html" %}
+{% load static %}
+
+{% block navbar_item %}
+<div class="navbar-item ml-4">
+    <div class="media">
+        <div class="media-left">
+
+        </div>
+        <div class="media-content">
+            <p class="title is-4">{{ current_project.name}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block contents %}
+{% include "todo/components/task/create_task.html" %}
+
+<div class="column">
+    <div class="m-4 columns">
+        <div class="column is-full">
+            <div class="column">
+                <h1>説明</h1>
+                <pre>{{ current_project.explain }}</pre>
+            </div>
+            <div class="column" id="kanban">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'todo/js/task/task_operations.js' %}"></script>
+{% endblock %}

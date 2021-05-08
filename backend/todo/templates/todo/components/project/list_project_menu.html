@@ -5,10 +5,18 @@
         </p>
         <ul class="menu-list">
             <li>
-                <a class="is-active">プロジェクト</a>
+                {% if not current_project %}
+                <a class="is-active" href="{% url 'todo:app_top' %}">プロジェクト</a>
+                {% else %}
+                <a href="{% url 'todo:app_top' %}">プロジェクト</a>
+                {% endif %}
                 <ul>
                     {% for project in project_list %}
-                    <li><a>{{ project.name }}</a></li>
+                    {% if project.id == current_project.id %}
+                        <li><a class="is-active" href="{% url 'todo:app_project_task' project.id %}">{{ project.name }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'todo:app_project_task' project.id %}">{{ project.name }}</a></li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </li>

@@ -12,7 +12,7 @@
                             </figure>
                         </div>
                         <div class="media-content">
-                            <p class="title is-4">{{ project.name }}</p>
+                            <p class="title is-4"><a href="{% url 'todo:app_project_task' project.id %}">{{ project.name }}</a></p>
                         </div>
                     </div>
                     <div class="content">
