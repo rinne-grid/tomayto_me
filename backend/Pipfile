@@ -12,6 +12,8 @@ psycopg2 = "*"
 django-redis-sessions = "*"
 
 [dev-packages]
+django-extensions = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.9"

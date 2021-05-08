@@ -71,6 +71,14 @@ class Task(models.Model):
     end_date_time = models.DateTimeField(verbose_name="終了日時", blank=True, null=True)
     memo = models.TextField(verbose_name="メモ", blank=True, null=True)
 
+    project = models.ForeignKey(
+        Project,
+        verbose_name="プロジェクトタスク",
+        on_delete=models.CASCADE,
+    )
+
+    order_no = models.IntegerField(verbose_name="順番", blank=True, null=True)
+
     def __str__(self):
         return f"{self.name}"
 

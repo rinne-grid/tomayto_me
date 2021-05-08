@@ -17,4 +17,10 @@ urlpatterns = [
         views_todo.app_project_register,
         name="app_project_register",
     ),
+    # プロジェクトタスクに関するビュー
+    path(
+        "projects/<int:project_id>/tasks/",
+        views_todo.app_project_task,
+        name="app_project_task",
+    ),
 ]
