@@ -39,6 +39,17 @@ http://localhost:8000/todo
 |admin|admin|
 
 
+## TypeScript to JSビルド
+
+```sh
+$ cd backend
+$ yarn install
+$ npx webpack -w
+# backend/todo/static/src配下のTypeScriptがトランスパイルされ、
+# backend/todo/static/distに配置される
+```
+
+
 ## 環境情報
 
 * DB: postgresql
