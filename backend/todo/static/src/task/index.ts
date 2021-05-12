@@ -1,49 +1,40 @@
 import TaskService from "./services/TaskService";
-import {
-  clearRegisterForm,
-  getBoardId,
-  getProjectId,
-} from "./functions/dom_store";
+import * as DOMStore from "./functions/DOMStore";
 import $ from "cash-dom";
-import { parseBoardIdToStatusCd, refresh } from "./functions/kanban";
-import { ToMayToMeConst } from "./const/ToMayToMeConst";
-import { factoryAxios } from "./functions/utility";
+import * as Kanban from "./functions/Kanban";
+import { ProjectTask } from "./interfaces/ProjectTask";
 
 $(() => {
-  console.log("Hello TypeScript");
-  const taskService: TaskService = new TaskService();
-  taskService
-    .getProjectTasks("5")
-    .then((response) => {
-      console.log(response);
-      console.log("TypeScriptから実行です");
-    })
+  const projectId = DOMStore.getProjectId();
+  // カンバンデータの初期表示
+  Kanban.refresh(projectId)
+    .then(() => {})
     .catch((error) => {
-      console.log("TypeScriptから実行エラーです");
+      console.error(error.response);
     });
 
-  const projectId = getProjectId();
-  refresh(projectId);
+  const taskService: TaskService = new TaskService();
 
   // 作成ボタンクリック時にタスク登録を行います
-  $("#todo_tasks_create_btn").on("click", (event) => {
-    const taskName = $("[name=todo_tasks]").val();
-    const boardId = getBoardId();
-    const status = parseBoardIdToStatusCd(boardId);
-    if (taskName !== undefined && taskName !== "") {
-      const axios = factoryAxios();
-      axios
-        .post(
-          `${ToMayToMeConst.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/`,
-          {
-            name: taskName,
-            status: status,
-            project: projectId,
-          }
-        )
-        .then((response) => {
-          refresh(projectId);
-          clearRegisterForm();
+  $("#todo_tasks_create_btn").on("click", () => {
+    const boardId = DOMStore.getBoardId();
+    const task: ProjectTask = {
+      name: DOMStore.getTaskName(),
+      status: Kanban.parseBoardIdToStatusCd(boardId),
+      project: projectId,
+    };
+
+    if (task.name !== undefined && task.name !== "") {
+      // タスク登録実行
+      taskService
+        .createProjectTask(task)
+        .then(() => {
+          // タスク登録に成功したらカンバンのデータを更新する
+          Kanban.refresh(projectId)
+            .then(() => {})
+            .catch((error) => console.error(error.response));
+          // 登録フォームの情報をクリアする
+          DOMStore.clearRegisterForm();
         })
         .catch((error) => {
           console.error(error);
