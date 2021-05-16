@@ -9,6 +9,7 @@ import TaskService from "../services/TaskService";
  */
 export function parseBoardIdToStatusCd(boardId: string | string[]) {
   let statusCd = "";
+
   switch (boardId) {
     case ToMayToMeConst.BOARD_ID_TODO:
       statusCd = ToMayToMeConst.STATUS_CD_TODO;
