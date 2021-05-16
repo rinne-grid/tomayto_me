@@ -1,7 +1,9 @@
 from rest_framework import generics
 from rest_framework import permissions
+from django.http.response import HttpResponseForbidden
 from api.serializers import TaskSerializer
 from todo.models import Task, Project, ProjectMember
+from todo.utils import has_user_access_project
 
 
 class TaskListCreateAPIView(generics.ListCreateAPIView):
@@ -11,8 +13,13 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     # TODO: タスク作成時のエスケープ処理、バリデーションが必要
-    # def post(self, request, *args, **kwargs):
-    #     return self.create(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        project_id = kwargs["project_id"]
+        if has_user_access_project(request.user.id, project_id):
+            return self.create(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
     #
     # def get(self, request, *args, **kwargs):
     #     return self.list(request, *args, **kwargs)
@@ -23,19 +30,11 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
         project_id = self.kwargs["project_id"]
 
-        # TODO: タスク一覧の取得とアクセス権限チェックが密結合になっているため、分割を検討する
-        # タスクへのアクセス権限チェック：対象プロジェクトのオーナーかどうか
-        project_owner_count = (
-            Project.objects.select_related("owner_user").filter(id=project_id).count()
-        )
-        # 対象プロジェクトのメンバーかどうか
-        project_member_list = (
-            ProjectMember.objects.select_related("project")
-            .filter(project__id=project_id, user=self.request.user)
-            .count()
-        )
-        if project_owner_count + project_member_list > 0:
+        # タスクへのアクセス権限チェック
+
+        if has_user_access_project(self.request.user.id, project_id):
             project_task_list = Task.objects.filter(project__id=project_id)
+
         return project_task_list
 
 
