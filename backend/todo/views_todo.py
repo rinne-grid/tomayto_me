@@ -1,14 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render, redirect, reverse
 from django.views import View
 from .forms_todo import ProjectForm
 from .mixins import ProjectTaskAccessMixin
-from .models import Project
-from .utils import AppSessionManager
+from .models import Project, ProjectMember
+from .utils import AppSessionManager, get_user_projects
 
 
 def set_common_context(request, context):
-    project_list = Project.objects.filter(owner_user=request.user)
+    project_list = get_user_projects(request.user.id)
+    # project_list = Project.objects.filter(owner_user=request.user)
     context["project_list"] = project_list
     return context
 
@@ -18,12 +20,10 @@ class AppTopView(LoginRequiredMixin, View):
         super()
         project_form = ProjectForm()
 
-        project_list = Project.objects.filter(owner_user=request.user)
-
         context = {
             "project_form": project_form,
-            "project_list": project_list,
         }
+        set_common_context(request, context)
         return render(request, "todo/pages/top.html", context)
 
 
