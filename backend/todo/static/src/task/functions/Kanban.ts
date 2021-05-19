@@ -68,6 +68,7 @@ export function parseTaskModelToBoardItem(projectTaskList: ProjectTask[]) {
           end_date_time: task.end_date_time,
           memo: task.memo,
           project: task.project,
+          order_no: task.order_no,
         };
         taskBoardHash[_boardId].push(taskObj);
         break;

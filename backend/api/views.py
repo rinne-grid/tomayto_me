@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework import permissions
 from django.http.response import HttpResponseForbidden, HttpResponse
+from django.db import transaction
 from api.serializers import TaskSerializer
 from todo.models import Task, Project, ProjectMember
 from todo.utils import has_user_access_project
@@ -20,6 +21,15 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
         else:
             return HttpResponseForbidden()
 
+    def perform_create(self, serializer):
+        status = self.request.data["status"]
+        project_id = self.kwargs["project_id"]
+        with transaction.atomic():
+            order_no = (
+                Task.objects.filter(status=status, project_id=project_id).count() + 1
+            )
+            serializer.save(order_no=order_no)
+
     #
     # def get(self, request, *args, **kwargs):
     #     return self.list(request, *args, **kwargs)
@@ -33,7 +43,9 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
         # タスクへのアクセス権限チェック
 
         if has_user_access_project(self.request.user.id, project_id):
-            project_task_list = Task.objects.filter(project__id=project_id)
+            project_task_list = Task.objects.filter(project__id=project_id).order_by(
+                "order_no"
+            )
 
         return project_task_list
 
