@@ -7,4 +7,5 @@ export interface ProjectTask {
   end_date_time?: Date;
   memo?: string;
   project?: string;
+  order_no?: string;
 }

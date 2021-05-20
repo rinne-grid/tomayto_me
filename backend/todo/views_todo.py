@@ -32,14 +32,10 @@ class ProjectCreateView(View, LoginRequiredMixin):
         super()
         project_form = ProjectForm(request.POST)
         if project_form.is_valid():
-            print("project_form.is_valid")
             # project_form.owner_user = request.user
             project = project_form.save(commit=False)
             project.owner_user = request.user
             project.save()
-        else:
-            print(project_form)
-            print("not project_form.is_valid")
 
         return redirect(reverse("todo:app_top"))
 

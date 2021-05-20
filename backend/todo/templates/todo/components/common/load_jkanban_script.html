@@ -1,6 +1,23 @@
 {% load static %}
 <script src="{% static 'todo/js/lib/jkanban.min.js' %}"></script>
 <script>
+function parseBoardIdToStatusCd(boardId) {
+    let statusCd = "";
+    switch(boardId) {
+        case "todo_board":
+            statusCd = "TODO";
+            break;
+        case "working_board":
+            statusCd = "WORKING";
+            break;
+        case "completed_board":
+            statusCd = "COMPLETE";
+            break;
+    }
+    return statusCd;
+}
+
+
 if(document.querySelector("#kanban") !== null) {
     var kanban = new jKanban({
         element: '#kanban',                                     // selector of the kanban container
@@ -29,7 +46,7 @@ if(document.querySelector("#kanban") !== null) {
         itemAddOptions: {
             enabled: true,                                              // add a button to board for easy item creation
             content: "",                                                // text or html content of the board button
-            {#class: 'kanban-title-button btn btn-default btn-xs fas fas-plus',         // default class of the button#}
+            class: 'kanban-title-button btn btn-default btn-xs fas fas-plus',         // default class of the button
             class: 'kanban-title-button button is-primary fas fas-plus rngd_button-modal--open',         // default class of the button
             footer: false                                                // position the button on footer
         },
@@ -45,9 +62,41 @@ if(document.querySelector("#kanban") !== null) {
         dragEl: function (el, source) {
         },                     // callback when any board's item are dragged
         dragendEl: function (el) {
-            console.log(el);
+
         },                             // callback when any board's item stop drag
         dropEl: function (el, target, source, sibling) {
+
+            // 対象エレメントからitemIdを取り出し、親ボードIDを取得。
+            const itemId = el.dataset.eid;
+            const projectId = el.dataset.project;
+            // 親ボードIDから紐づくエレメント一覧を取得
+            const parentBoardId = kanban.getParentBoardID(itemId);
+            const boardElements = kanban.getBoardElements(parentBoardId);
+            const requestData = [];
+            // リクエストデータ作成
+            // {task_id: 0, order_no n+1}
+            boardElements.forEach((elem, index) => {
+                // boardId-taskId形式からタスクIDを取得する
+                const taskId = elem.dataset.eid.split("-")[1];
+                const orderNo = index + 1;
+                requestData.push(
+                    {
+                        task_id: taskId,
+                        order_no: orderNo
+                    }
+                )
+            });
+
+            const statusCd = parseBoardIdToStatusCd(parentBoardId);
+            axios.put(
+                {#`${window.ToMayToMeConstJs.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/${taskId}/update/`,#}
+                `${window.ToMayToMeConstJs.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/${statusCd}/update/`,
+                requestData
+            ).then(response => {
+            }).catch(error => {
+                console.log(error.response);
+            })
+
         },    // callback when any board's item drop in a board
         dragBoard: function (el, source) {
         },                     // callback when any board stop drag
