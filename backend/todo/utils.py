@@ -47,7 +47,6 @@ def has_user_access_project(user_id, project_id):
     :return:
     """
     project_list = get_user_projects(user_id)
-    print(project_list)
     return project_list.filter(id=project_id).exists()
 
 

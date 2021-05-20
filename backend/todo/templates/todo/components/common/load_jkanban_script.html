@@ -65,25 +65,33 @@ if(document.querySelector("#kanban") !== null) {
 
         },                             // callback when any board's item stop drag
         dropEl: function (el, target, source, sibling) {
-            console.log(el);
-            console.log(target);
-            console.log(source);
-            console.log(sibling);
-            // 1. ボードIDからステータスIDに変換する
-            // 2. itemIdをハイフンでsplitしてIDを取り出す
-            // 3. 取り出したID及び変換したステータスIDをパラメータとして利用する
-            // 4. axiosでタスク更新APIをコールする
+
+            // 対象エレメントからitemIdを取り出し、親ボードIDを取得。
             const itemId = el.dataset.eid;
             const projectId = el.dataset.project;
+            // 親ボードIDから紐づくエレメント一覧を取得
             const parentBoardId = kanban.getParentBoardID(itemId);
+            const boardElements = kanban.getBoardElements(parentBoardId);
+            const requestData = [];
+            // リクエストデータ作成
+            // {task_id: 0, order_no n+1}
+            boardElements.forEach((elem, index) => {
+                // boardId-taskId形式からタスクIDを取得する
+                const taskId = elem.dataset.eid.split("-")[1];
+                const orderNo = index + 1;
+                requestData.push(
+                    {
+                        task_id: taskId,
+                        order_no: orderNo
+                    }
+                )
+            });
 
             const statusCd = parseBoardIdToStatusCd(parentBoardId);
-            const taskId = itemId.split("-")[1];
             axios.put(
-                `${window.ToMayToMeConstJs.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/${taskId}/update/`,
-                {
-                    status: statusCd
-                }
+                {#`${window.ToMayToMeConstJs.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/${taskId}/update/`,#}
+                `${window.ToMayToMeConstJs.API_END_POINT_TASKS_CRUD}/${projectId}/tasks/${statusCd}/update/`,
+                requestData
             ).then(response => {
             }).catch(error => {
                 console.log(error.response);

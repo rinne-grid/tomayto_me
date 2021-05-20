@@ -88,5 +88,26 @@ class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         return HttpResponse(status=204)
 
 
+class TaskListUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = TaskSerializer
+
+    def put(self, request, *args, **kwargs):
+        # 更新対象のタスクを取得する
+        project_id = kwargs["project_id"]
+        task_list = Task.objects.filter(project_id=project_id)
+
+        status = kwargs["status"]
+        new_task_list = []
+        for task_obj in request.data:
+            # リクエストで受け取ったタスクに対して順序を付与する
+            target_task_obj = task_list.get(id=task_obj["task_id"])
+            target_task_obj.order_no = task_obj["order_no"]
+            target_task_obj.status = status
+            new_task_list.append(target_task_obj)
+        Task.objects.bulk_update(new_task_list, fields=["order_no", "status"])
+        return HttpResponse(status=204)
+
+
 task_list_create_api_view = TaskListCreateAPIView.as_view()
 task_retrieve_update_destroy_view = TaskRetrieveUpdateDestroyAPIView.as_view()
+task_list_update_api_view = TaskListUpdateAPIView.as_view()
