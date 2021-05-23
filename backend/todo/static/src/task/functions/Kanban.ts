@@ -62,7 +62,13 @@ export function parseTaskModelToBoardItem(projectTaskList: ProjectTask[]) {
       if (isStatusCdEqualsBoardId(task.status, _boardId)) {
         const taskObj = {
           id: `${_boardId}-${task.id}`,
-          title: task.name,
+          title: `
+          <div class="box is-align-content-end">
+            <button id='pomodorobtn-${_boardId}-${task.id}' class='button is-rounded is-danger is-small'>T</button>
+            <div>${task.name}</div>
+          </div>
+          `,
+          name: task.name, // jKanban Dataset用
           status: task.status,
           start_date_time: task.start_date_time,
           end_date_time: task.end_date_time,

@@ -65,12 +65,38 @@ if(document.querySelector("#kanban") !== null) {
 
         },                             // callback when any board's item stop drag
         dropEl: function (el, target, source, sibling) {
+            console.debug("source:", source);
+            console.debug("target:", target);
+            console.debug("el:", el);
 
             // 対象エレメントからitemIdを取り出し、親ボードIDを取得。
             const itemId = el.dataset.eid;
+            const parentBoardId = kanban.getParentBoardID(itemId);
+
+            // ボード間移動の場合、エレメントの置換を行う
+            if(source !== target) {
+                const newDataSet = {
+                    id: itemId,
+                    title: `
+                      <div class="box is-align-content-end">
+                        <button id='pomodorobtn-${itemId}' class='button is-rounded is-danger is-small'>T</button>
+                        <div>${el.dataset.name}</div>
+                      </div>
+                      `,
+                    name: el.dataset.name,
+                    status: parseBoardIdToStatusCd(parentBoardId),
+                    start_date_time: el.dataset.start_date_time,
+                    end_date_time: el.dataset.end_date_time,
+                    memo: el.dataset.memo,
+                    project: el.dataset.project,
+                    order_no: el.dataset.order_no
+                }
+                kanban.replaceElement(itemId, newDataSet);
+            }
+
             const projectId = el.dataset.project;
             // 親ボードIDから紐づくエレメント一覧を取得
-            const parentBoardId = kanban.getParentBoardID(itemId);
+
             const boardElements = kanban.getBoardElements(parentBoardId);
             const requestData = [];
             // リクエストデータ作成
