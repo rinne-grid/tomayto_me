@@ -12,6 +12,8 @@ class AppUser(AbstractUser):
     https://docs.djangoproject.com/ja/3.2/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project
     """
 
+    pass
+
 
 class Project(models.Model):
     """プロジェクト"""
