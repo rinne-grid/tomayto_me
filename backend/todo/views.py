@@ -52,45 +52,35 @@ class AppUserRegisterView(View):
         if form.is_valid():
             cleaned_data = form.cleaned_data
 
-            # 入力内容は正しいが、パスワードチェックが通らなかった場合
-            if not self.validate_password(
-                cleaned_data["password"], cleaned_data["password_confirm"]
-            ):
-                context = {"form": form, "err_msg": "パスワードと確認用パスワードが一致していませんでした"}
+            user = AppUser()
+            try:
+                user.username = cleaned_data["username"]
+                user.set_password(cleaned_data["password"])
+
+                user.email = cleaned_data["email"]
+                user.save()
+                # ここですでにユーザ情報が取得できているためauthenticateは不要
+                # 実施しようとすると、loginの部分で
+                # AttributeError: 'AnonymousUser' object has no attribute '_meta'が発生する
+
+                login(
+                    request,
+                    user,
+                    backend="django.contrib.auth.backends.ModelBackend",
+                )
+                return redirect(reverse("todo:app_top"))
+            except ValidationError:
+                context = {"form": form}
                 return render(request, "todo/pages/auth/register.html", context)
-            else:
-                user = AppUser()
-                try:
-                    user.username = cleaned_data["username"]
-                    user.set_password(cleaned_data["password"])
-
-                    user.email = cleaned_data["email"]
-                    user.save()
-                    # ここですでにユーザ情報が取得できているためauthenticateは不要
-                    # 実施しようとすると、loginの部分で
-                    # AttributeError: 'AnonymousUser' object has no attribute '_meta'が発生する
-
-                    login(
-                        request,
-                        user,
-                        backend="django.contrib.auth.backends.ModelBackend",
-                    )
-                    return redirect(reverse("todo:app_top"))
-                except ValidationError:
-                    context = {"form": form}
-                    return render(request, "todo/pages/auth/register.html", context)
-                except IntegrityError:
-                    context = {
-                        "form": form,
-                        "err_msg": "指定されたユーザIDは利用できません。別のIDを指定してください。",
-                    }
-                    return render(request, "todo/pages/auth/register.html", context)
+            except IntegrityError:
+                context = {
+                    "form": form,
+                    "err_msg": "指定されたユーザIDは利用できません。別のIDを指定してください。",
+                }
+                return render(request, "todo/pages/auth/register.html", context)
         else:
             context = {"form": form}
             return render(request, "todo/pages/auth/register.html", context)
-
-    def validate_password(self, password, password_confirm):
-        return password == password_confirm
 
 
 # サービスインデックスページ
