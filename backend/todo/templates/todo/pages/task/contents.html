@@ -31,10 +31,14 @@
         </div>
     </div>
 </div>
+
+{% include "todo/components/timer/view_timer.html" %}
+
 {% endblock %}
 
 {% block script %}
 {#<script src="{% static 'todo/js/task/task_operations.js' %}"></script>#}
 
 <script src="{% static 'dist/task.js' %}"></script>
+<script src="{% static 'dist/timer.js' %}"></script>
 {% endblock %}

@@ -41,4 +41,8 @@ $(() => {
         });
     }
   });
+
+  $("[id^=pomodorobtn]").on("click", (elem: any) => {
+    console.debug(elem);
+  });
 });
