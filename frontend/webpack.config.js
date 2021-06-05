@@ -1,14 +1,14 @@
 module.exports = {
   mode: "development",
   entry: {
-    task: `${__dirname}/todo/static/src/task/index.ts`,
-    timer: `${__dirname}/todo/static/src/timer/index.ts`,
+    task: `${__dirname}/src/task/index.ts`,
+    timer: `${__dirname}/src/timer/index.ts`,
   },
   output: {
-    path: `${__dirname}/todo/static/dist`,
+    path: `${__dirname}/../backend/todo/static/dist`,
   },
   devServer: {
-    contentBase: `${__dirname}/todo/static/dist`,
+    contentBase: `${__dirname}/../backend/todo/static/dist`,
   },
   module: {
     rules: [

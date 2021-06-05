@@ -29,25 +29,25 @@ eval("/**\n * easytimer.js\n * Generated: 2021-03-16\n * Version: 4.3.4\n */\n\n
 
 /***/ }),
 
-/***/ "./todo/static/src/timer/classes/PomodoroTimer.ts":
-/*!********************************************************!*\
-  !*** ./todo/static/src/timer/classes/PomodoroTimer.ts ***!
-  \********************************************************/
+/***/ "./src/timer/classes/PomodoroTimer.ts":
+/*!********************************************!*\
+  !*** ./src/timer/classes/PomodoroTimer.ts ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var easytimer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! easytimer.js */ \"./node_modules/easytimer.js/dist/easytimer.js\");\n/* harmony import */ var easytimer_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(easytimer_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! cash-dom */ \"./node_modules/cash-dom/dist/cash.js\");\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cash_dom__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\nvar PomodoroTimer = /** @class */ (function () {\r\n    function PomodoroTimer(timerDomSelector, minutes) {\r\n        this.timer = new easytimer_js__WEBPACK_IMPORTED_MODULE_0__.Timer({\r\n            countdown: true,\r\n            startValues: { minutes: minutes },\r\n        });\r\n        this.timerDomSelector = timerDomSelector;\r\n        this.initialize();\r\n    }\r\n    PomodoroTimer.prototype.initialize = function () {\r\n        var _this = this;\r\n        // タイムレーンを表示し、タイマーのカウントダウンを開始する\r\n        cash_dom__WEBPACK_IMPORTED_MODULE_1___default()(\".time-lane\").css(\"display\", \"block\");\r\n        this.refresh();\r\n        this.timer.start();\r\n        this.timer.addEventListener(\"secondsUpdated\", function (e) {\r\n            _this.refresh();\r\n        });\r\n    };\r\n    PomodoroTimer.prototype.refresh = function () {\r\n        cash_dom__WEBPACK_IMPORTED_MODULE_1___default()(this.timerDomSelector + \" .values\").html(this.timer.getTimeValues().toString());\r\n    };\r\n    return PomodoroTimer;\r\n}());\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PomodoroTimer);\r\n\n\n//# sourceURL=webpack://tomayto-me/./todo/static/src/timer/classes/PomodoroTimer.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var easytimer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! easytimer.js */ \"./node_modules/easytimer.js/dist/easytimer.js\");\n/* harmony import */ var easytimer_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(easytimer_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! cash-dom */ \"./node_modules/cash-dom/dist/cash.js\");\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cash_dom__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\nvar PomodoroTimer = /** @class */ (function () {\r\n    function PomodoroTimer(timerDomSelector, minutes) {\r\n        this.timer = new easytimer_js__WEBPACK_IMPORTED_MODULE_0__.Timer({\r\n            countdown: true,\r\n            startValues: { minutes: minutes },\r\n        });\r\n        this.timerDomSelector = timerDomSelector;\r\n        this.initialize();\r\n    }\r\n    PomodoroTimer.prototype.initialize = function () {\r\n        var _this = this;\r\n        // タイムレーンを表示し、タイマーのカウントダウンを開始する\r\n        cash_dom__WEBPACK_IMPORTED_MODULE_1___default()(\".time-lane\").css(\"display\", \"block\");\r\n        this.refresh();\r\n        this.timer.start();\r\n        this.timer.addEventListener(\"secondsUpdated\", function (e) {\r\n            _this.refresh();\r\n        });\r\n    };\r\n    PomodoroTimer.prototype.refresh = function () {\r\n        cash_dom__WEBPACK_IMPORTED_MODULE_1___default()(this.timerDomSelector + \" .values\").html(this.timer.getTimeValues().toString());\r\n    };\r\n    return PomodoroTimer;\r\n}());\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PomodoroTimer);\r\n\n\n//# sourceURL=webpack://tomayto-me/./src/timer/classes/PomodoroTimer.ts?");
 
 /***/ }),
 
-/***/ "./todo/static/src/timer/index.ts":
-/*!****************************************!*\
-  !*** ./todo/static/src/timer/index.ts ***!
-  \****************************************/
+/***/ "./src/timer/index.ts":
+/*!****************************!*\
+  !*** ./src/timer/index.ts ***!
+  \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cash-dom */ \"./node_modules/cash-dom/dist/cash.js\");\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cash_dom__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _classes_PomodoroTimer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/PomodoroTimer */ \"./todo/static/src/timer/classes/PomodoroTimer.ts\");\n\r\n\r\ncash_dom__WEBPACK_IMPORTED_MODULE_0___default()(function () {\r\n    console.debug(\"start\");\r\n    cash_dom__WEBPACK_IMPORTED_MODULE_0___default()(document).on(\"click\", \"[id^=pomodorobtn-]\", function (event) {\r\n        console.debug(event.target);\r\n        var timer = new _classes_PomodoroTimer__WEBPACK_IMPORTED_MODULE_1__.default(\"#pomodoro_timer\", 2);\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://tomayto-me/./todo/static/src/timer/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cash-dom */ \"./node_modules/cash-dom/dist/cash.js\");\n/* harmony import */ var cash_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cash_dom__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _classes_PomodoroTimer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/PomodoroTimer */ \"./src/timer/classes/PomodoroTimer.ts\");\n\r\n\r\ncash_dom__WEBPACK_IMPORTED_MODULE_0___default()(function () {\r\n    console.debug(\"start\");\r\n    cash_dom__WEBPACK_IMPORTED_MODULE_0___default()(document).on(\"click\", \"[id^=pomodorobtn-]\", function (event) {\r\n        console.debug(event.target);\r\n        var timer = new _classes_PomodoroTimer__WEBPACK_IMPORTED_MODULE_1__.default(\"#pomodoro_timer\", 2);\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://tomayto-me/./src/timer/index.ts?");
 
 /***/ })
 
@@ -123,7 +123,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var cash
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./todo/static/src/timer/index.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/timer/index.ts");
 /******/ 	
 /******/ })()
 ;
