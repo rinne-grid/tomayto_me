@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "rinne-grid",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack -w",
+    "build": "webpack build"
+  },
   "dependencies": {
     "@types/axios": "^0.14.0",
     "axios": "^0.21.1",

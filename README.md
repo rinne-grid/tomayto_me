@@ -42,10 +42,14 @@ http://localhost:8000/todo
 ## TypeScript to JSビルド
 
 ```sh
-$ cd backend
+$ cd frontend
 $ yarn install
 $ npx webpack -w
-# backend/todo/static/src配下のTypeScriptがトランスパイルされ、
+# or
+# yarn start
+# or
+# yarn build
+# frontend/src配下のTypeScriptがトランスパイルされ、
 # backend/todo/static/distに配置される
 ```
 
