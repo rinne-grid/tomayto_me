@@ -12,4 +12,7 @@ export class ToMayToMeConst {
     ToMayToMeConst.BOARD_ID_WORKING,
     ToMayToMeConst.BOARD_ID_COMPLETED,
   ];
+
+  // ポモドーロボタンプレフィックス
+  public static PREFIX_ID_POMODORO_BTN = "pomodorobtn-";
 }

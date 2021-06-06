@@ -1,5 +1,8 @@
 <!-- ポモドーロタイマー -->
 <style>
+body {
+    padding-bottom: 800px;
+}
 .time-lane-lg {
     top: 0;
     overflow-y: auto;
@@ -13,6 +16,7 @@
     background-color: #fff;
     border-top: 1px solid #ccc;
     display: none;
+    padding: 18px 18px 30px;
 }
 
 #pomodoro_timer .values {
@@ -27,7 +31,10 @@
         </div>
         <div class="column is-half has-text-centered">
             <div id="pomodoro_timer">
-                <div class="values">00:00:00</div><button class="button is-rounded is-danger is-small">中断</button>
+                <div class="values">00:00:00</div>
+                <button id="suspend_pomodoro" class="button is-rounded is-danger is-small">中断</button>
+                <button id="break_pomodoro" class="button is-rounded is-primary is-small">休憩</button>
+                <button id="exit_pomodoro" class="button is-rounded is-light is-small">終了</button>
             </div>
         </div>
         <div class="column has-text-right">
