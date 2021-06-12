@@ -15,4 +15,13 @@ export class ToMayToMeConst {
 
   // ポモドーロボタンプレフィックス
   public static PREFIX_ID_POMODORO_BTN = "pomodorobtn-";
+  public static POMODORO_STATUS_TIME_STOPPING = "TIME_STOPPING";
+  public static POMODORO_STATUS_TIME_WORKING = "TIME_WORKING";
+  public static POMODORO_STATUS_TIME_BREAKING = "TIME_BREAKING";
+  public static POMODORO_STATUS_TIME_PAUSING = "TIME_PAUSING";
+  public static POMODORO_BUTTON_ID_BREAK = "break_pomodoro";
+  public static POMODORO_BUTTON_ID_RESUME = "resume_pomodoro";
+  public static POMODORO_BUTTON_ID_PAUSE = "pause_pomodoro";
+
+  public static POMODORO_TIMER_LANE = "pomodoro_timer";
 }

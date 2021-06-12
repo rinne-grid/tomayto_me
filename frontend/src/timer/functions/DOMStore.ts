@@ -1,3 +1,4 @@
+import $ from "cash-dom";
 import { ToMayToMeConst } from "../../task/const/ToMayToMeConst";
 import { parseJKanbanTaskToProjectTask } from "../../task/functions/Kanban";
 /***
@@ -16,4 +17,25 @@ export function getProjectTaskByDoPomodoroTargetId(targetId: string) {
   // @ts-ignore
   const kTask: JKanbanTask = window.kanban.findElement(kanbanItemId).dataset;
   return parseJKanbanTaskToProjectTask(kTask);
+}
+
+export function toggleTimeLaneBreakButton(disabled: boolean) {
+  $(`#${ToMayToMeConst.POMODORO_BUTTON_ID_BREAK}`).prop("disabled", disabled);
+}
+
+function toggleIsHidden(targetId: string, isHidden: boolean) {
+  const elem = $(`#${targetId}`);
+  if (isHidden) {
+    elem.addClass("is-hidden");
+  } else {
+    elem.removeClass("is-hidden");
+  }
+}
+
+export function toggleTimeLaneResumeButton(isHidden: boolean) {
+  toggleIsHidden(ToMayToMeConst.POMODORO_BUTTON_ID_RESUME, isHidden);
+}
+
+export function toggleTimeLanePauseButton(isHidden: boolean) {
+  toggleIsHidden(ToMayToMeConst.POMODORO_BUTTON_ID_PAUSE, isHidden);
 }
