@@ -32,9 +32,10 @@ body {
         <div class="column is-half has-text-centered">
             <div id="pomodoro_timer">
                 <div class="values">00:00:00</div>
-                <button id="suspend_pomodoro" class="button is-rounded is-danger is-small">中断</button>
-                <button id="break_pomodoro" class="button is-rounded is-primary is-small">休憩</button>
-                <button id="exit_pomodoro" class="button is-rounded is-light is-small">終了</button>
+                <button id="pause_pomodoro" class="button is-rounded is-light is-small">一時停止</button>
+                <button id="break_pomodoro" class="button is-rounded is-primary is-small" disabled>休憩</button>
+                <button id="resume_pomodoro" class="button is-rounded is-primary is-small is-hidden">再開</button>
+                <button id="exit_pomodoro" class="button is-rounded is-danger is-small">終了</button>
             </div>
         </div>
         <div class="column has-text-right">
