@@ -3,6 +3,10 @@ import { Timer, TimerEvent } from "easytimer.js";
 import { ProjectTask } from "../../task/interfaces/ProjectTask";
 import { ToMayToMeConst } from "../../task/const/ToMayToMeConst";
 import * as DOMStore from "../functions/DOMStore";
+import {
+  setTimeLaneColor,
+  setTimerCounterDestroy,
+} from "../functions/DOMStore";
 
 export default class PomodoroTimer {
   private timer: Timer;
@@ -26,7 +30,7 @@ export default class PomodoroTimer {
     minutes: number,
     targetTask: ProjectTask,
     countdown: boolean = true,
-    pomodoroStatus: string = ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+    pomodoroStatus: string
   ) {
     this.timer = new Timer({
       countdown: countdown,
@@ -36,6 +40,7 @@ export default class PomodoroTimer {
     this.targetTask = targetTask;
     this.timerBaseMinutes = minutes;
     this.pomodoroStatus = pomodoroStatus;
+
     this.initialize();
   }
 
@@ -57,7 +62,6 @@ export default class PomodoroTimer {
    */
   start() {
     this.timer.start();
-    this.pomodoroStatus = ToMayToMeConst.POMODORO_STATUS_TIME_WORKING;
   }
 
   /***
@@ -86,6 +90,14 @@ export default class PomodoroTimer {
   }
 
   /***
+   * タイマーを一時停止から再開する
+   */
+  startFromPause() {
+    this.timer.start();
+    this.pomodoroStatus = ToMayToMeConst.POMODORO_STATUS_TIME_WORKING;
+  }
+
+  /***
    * タイマーを再開する
    *
    */
@@ -98,13 +110,26 @@ export default class PomodoroTimer {
    * タイマーをクリアする
    */
   destroy() {
-    this.timer.removeEventListener("secondsUpdated", () => {});
-    this.stop();
-    this.timer = null;
+    if (this.timer !== null) {
+      this.timer.removeEventListener("secondsUpdated", () => {});
+      this.timer.removeEventListener("targetAchieved", this.listenerAchieved);
+      this.stop();
+      this.timer = null;
+    }
   }
 
+  /***
+   * タイマーが一時停止中かどうかを返す
+   */
   isPausing() {
     return this.pomodoroStatus === ToMayToMeConst.POMODORO_STATUS_TIME_PAUSING;
+  }
+
+  /***
+   * タイマーが停止中かどうかを返す
+   */
+  isStopping() {
+    return this.pomodoroStatus === ToMayToMeConst.POMODORO_STATUS_TIME_STOPPING;
   }
 
   /***
@@ -113,6 +138,13 @@ export default class PomodoroTimer {
    */
   getTargetTask() {
     return this.targetTask;
+  }
+
+  /***
+   * 経過時間合計：分を返す
+   */
+  getTotalTimeMinutes() {
+    return this.timer.getTotalTimeValues().minutes;
   }
 
   /***
@@ -128,20 +160,28 @@ export default class PomodoroTimer {
    * タイマーの時間計測終了時に呼び出すハンドラーをセットする
    */
   setAchievedHandler() {
-    this.timer.addEventListener("targetAchieved", (e: TimerEvent) => {
-      // 現在作業中の場合、超過時間の記録を開始する
-      if (this.pomodoroStatus === ToMayToMeConst.POMODORO_STATUS_TIME_WORKING) {
-        console.debug("超過時間の記録を開始します");
+    this.timer.addEventListener(
+      "targetAchieved",
+      this.listenerAchieved.bind(this)
+    );
+  }
 
-        DOMStore.toggleTimeLaneBreakButton(false);
-        // タイマー完了時に、基準時間を元にカウントアップを開始する
-        this.timer = new Timer({
-          countdown: false,
-          startValues: { minutes: this.timerBaseMinutes },
-        });
-        this.start();
-        this.setRefreshHandler();
-      }
-    });
+  listenerAchieved(e: TimerEvent) {
+    // 現在作業中の場合、超過時間の記録を開始する
+    if (this.pomodoroStatus === ToMayToMeConst.POMODORO_STATUS_TIME_WORKING) {
+      console.debug("超過時間の記録を開始します");
+
+      DOMStore.toggleTimeLaneBreakButton(false);
+      DOMStore.setTimeLaneColor(
+        ToMayToMeConst.POMODORO_TIMER_LANE_COLOR_OVER_WORK
+      );
+      // タイマー完了時に、基準時間を元にカウントアップを開始する
+      this.timer = new Timer({
+        countdown: false,
+        startValues: { minutes: this.timerBaseMinutes },
+      });
+      this.start();
+      this.setRefreshHandler();
+    }
   }
 }

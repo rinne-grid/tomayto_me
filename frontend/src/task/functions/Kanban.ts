@@ -155,7 +155,7 @@ export function parseJKanbanTaskToProjectTask(jKanbanTask: JKanbanTask) {
   let endDateTimeStr = jKanbanTask.end_date_time;
 
   const projectTask: ProjectTask = {
-    id: jKanbanTask.eid,
+    id: jKanbanTask.eid.split("-")[1],
     name: jKanbanTask.name,
     title: jKanbanTask.name,
     status: jKanbanTask.status,

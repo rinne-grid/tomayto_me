@@ -9,10 +9,10 @@ import {
 } from "./functions/TimerFactory";
 import { ToMayToMeConst } from "../task/const/ToMayToMeConst";
 import { HTMLEvent } from "./interfaces/HTMLEvent";
-import { toggleTimeLanePauseButton } from "./functions/DOMStore";
+import TimerService from "./services/TimerService";
 
 let pomodoroTimer: PomodoroTimer = null;
-
+const timerService = new TimerService();
 // TODO: 重複コードを省くためとはいえ、グローバル変数の破棄をここでやるのはどうなのか
 function destroyPomodoroTimer() {
   if (pomodoroTimer !== null) {
@@ -30,6 +30,9 @@ $(() => {
 
       destroyPomodoroTimer();
       pomodoroTimer = factoryPomodoroTimer(pomodoroButtonId);
+      DOMStore.changePomodoroStatus(
+        ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+      );
     }
   );
   // 休憩ボタンクリック時
@@ -39,17 +42,25 @@ $(() => {
     (event: HTMLEvent<HTMLInputElement>) => {
       console.debug("休憩します");
       let targetTask = pomodoroTimer.getTargetTask();
-      destroyPomodoroTimer();
-      pomodoroTimer = factoryPomodoroTimerBreakTime(targetTask);
-      // TODO: ボタン切り替えのコードが汚いため修正する
-      const isHidden = false;
-      DOMStore.toggleTimeLaneResumeButton(isHidden);
-      const isDisabled = true;
-      DOMStore.toggleTimeLaneBreakButton(isDisabled);
-      const isHiddenPauseButton = true;
-      DOMStore.toggleTimeLanePauseButton(isHiddenPauseButton);
 
       // TODO: Service経由でポモドーロ獲得処理(TaskPomodoroへの登録)を実行する
+      const timeMinutes = pomodoroTimer.getTotalTimeMinutes();
+
+      timerService
+        .createTaskPomodoro(targetTask, timeMinutes)
+        .then((res) => {})
+        .catch((err) => {
+          console.error("timerService - createTaskPomodoroで失敗しました");
+          console.error(err.response);
+        });
+
+      destroyPomodoroTimer();
+      pomodoroTimer = factoryPomodoroTimerBreakTime(targetTask);
+
+      // 休憩状態に変更する
+      DOMStore.changePomodoroStatus(
+        ToMayToMeConst.POMODORO_STATUS_TIME_BREAKING
+      );
     }
   );
   // 再開ボタンクリック時
@@ -64,10 +75,10 @@ $(() => {
         pomodoroTimer.destroy();
       }
       pomodoroTimer = factoryPomodoroTimerFromProjectTask(targetTask);
-      const isHidden = true;
-      DOMStore.toggleTimeLaneResumeButton(isHidden);
-      const isHiddenPauseButton = false;
-      DOMStore.toggleTimeLanePauseButton(isHiddenPauseButton);
+      // 作業中状態に変更する
+      DOMStore.changePomodoroStatus(
+        ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+      );
     }
   );
   // 一時停止ボタンクリック時
@@ -77,11 +88,24 @@ $(() => {
     (event: HTMLEvent<HTMLInputElement>) => {
       // 一時停止中の場合
       if (pomodoroTimer.isPausing()) {
-        pomodoroTimer.start();
+        pomodoroTimer.startFromPause();
         $(event.target).text("一時停止");
       } else {
         pomodoroTimer.pause();
         $(event.target).text("一時停止から再開");
+      }
+    }
+  );
+  // 終了ボタンクリック時
+  $(document).on(
+    "click",
+    `#${ToMayToMeConst.POMODORO_BUTTON_ID_EXIT}`,
+    (event: HTMLEvent<HTMLInputElement>) => {
+      if (!pomodoroTimer.isStopping()) {
+        DOMStore.changePomodoroStatus(
+          ToMayToMeConst.POMODORO_STATUS_TIME_STOPPING
+        );
+        destroyPomodoroTimer();
       }
     }
   );

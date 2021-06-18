@@ -12,16 +12,20 @@ export function factoryPomodoroTimer(pomodoroButtonId: string) {
 
   return new PomodoroTimer(
     `#${ToMayToMeConst.POMODORO_TIMER_LANE}`,
-    0.1,
-    projectTask
+    0.05,
+    projectTask,
+    true,
+    ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
   );
 }
 
 export function factoryPomodoroTimerFromProjectTask(projectTask: ProjectTask) {
   return new PomodoroTimer(
     `#${ToMayToMeConst.POMODORO_TIMER_LANE}`,
-    0.1,
-    projectTask
+    0.05,
+    projectTask,
+    true,
+    ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
   );
 }
 
@@ -29,7 +33,7 @@ export function factoryPomodoroTimerBreakTime(projectTask: ProjectTask) {
   const isCountDown = true;
   return new PomodoroTimer(
     `#${ToMayToMeConst.POMODORO_TIMER_LANE}`,
-    0.2,
+    0.05,
     projectTask,
     isCountDown,
     ToMayToMeConst.POMODORO_STATUS_TIME_BREAKING

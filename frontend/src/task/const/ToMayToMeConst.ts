@@ -22,6 +22,11 @@ export class ToMayToMeConst {
   public static POMODORO_BUTTON_ID_BREAK = "break_pomodoro";
   public static POMODORO_BUTTON_ID_RESUME = "resume_pomodoro";
   public static POMODORO_BUTTON_ID_PAUSE = "pause_pomodoro";
+  public static POMODORO_BUTTON_ID_EXIT = "exit_pomodoro";
 
   public static POMODORO_TIMER_LANE = "pomodoro_timer";
+
+  public static POMODORO_TIMER_LANE_COLOR_WORKING = "#4a4a4a";
+  public static POMODORO_TIMER_LANE_COLOR_BREAKING = "#00d1b2";
+  public static POMODORO_TIMER_LANE_COLOR_OVER_WORK = "tomato";
 }

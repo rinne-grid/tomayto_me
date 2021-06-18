@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import task_pomodoro_create_api_view
 
 app_name = "api"
 
@@ -18,5 +19,10 @@ urlpatterns = [
         "projects/<int:project_id>/tasks/<str:status>/update/",
         views.task_list_update_api_view,
         name="task_list_update_api_view",
+    ),
+    path(
+        "projects/<int:project_id>/tasks/<int:task_id>/create_pomodoro/",
+        task_pomodoro_create_api_view,
+        name="task_pomodoro_create_api_view",
     ),
 ]

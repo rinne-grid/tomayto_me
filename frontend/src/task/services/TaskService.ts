@@ -1,12 +1,10 @@
 import { ToMayToMeConst } from "../const/ToMayToMeConst";
-import { factoryAxios } from "../functions/Utility";
 import { ProjectTask } from "../interfaces/ProjectTask";
+import WebAPIService from "../../common/classes/WebAPIService";
 
-export default class TaskService {
-  private axios;
-
+export default class TaskService extends WebAPIService {
   public constructor() {
-    this.axios = factoryAxios();
+    super();
   }
 
   /***
