@@ -4,7 +4,7 @@
 
 ![images](http://www.rinsymbol.sakura.ne.jp/github_images/tomaytome/tomaytome_01.png)
 
-![images](http://www.rinsymbol.sakura.ne.jp/github_images/tomaytome/tomaytome_03.png)
+![images](http://www.rinsymbol.sakura.ne.jp/github_images/tomaytome/tomaytome_04.png)
 
 ## 利用までの手順
 
