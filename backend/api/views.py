@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from django.http.response import HttpResponseForbidden, HttpResponse
 from django.db import transaction
-from api.serializers import TaskSerializer
+from api.serializers import TaskSerializer, TaskPomodoroSerializer
 from todo.models import Task, Project, ProjectMember
 from todo.utils import has_user_access_project
 
@@ -51,6 +51,8 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
 
 class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """タスク更新ビュー"""
+
     serializer_class = TaskSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -89,6 +91,8 @@ class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class TaskListUpdateAPIView(generics.UpdateAPIView):
+    """タスク一覧更新ビュー"""
+
     serializer_class = TaskSerializer
 
     def put(self, request, *args, **kwargs):
@@ -108,6 +112,23 @@ class TaskListUpdateAPIView(generics.UpdateAPIView):
         return HttpResponse(status=204)
 
 
+class TaskPomodoroCreateAPIView(generics.CreateAPIView):
+    serializer_class = TaskPomodoroSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        project_id = kwargs["project_id"]
+        if has_user_access_project(request.user.id, project_id):
+            return self.create(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+
+# タスク作成及び取得ビュー
 task_list_create_api_view = TaskListCreateAPIView.as_view()
+# タスク更新ビュー
 task_retrieve_update_destroy_view = TaskRetrieveUpdateDestroyAPIView.as_view()
+# タスク一覧更新ビュー
 task_list_update_api_view = TaskListUpdateAPIView.as_view()
+# タスクポモドーロ登録ビュー
+task_pomodoro_create_api_view = TaskPomodoroCreateAPIView.as_view()

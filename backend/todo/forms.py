@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+from django.core.exceptions import ValidationError
 
 
 class AppLoginForm(AuthenticationForm):
@@ -28,7 +29,20 @@ class AppLoginForm(AuthenticationForm):
     )
 
 
+def validate_password(password, password_confirm):
+    """パスワードと確認用パスワードが一致しているかどうかを確認します"""
+    if not password == password_confirm:
+        raise ValidationError("パスワードと確認用パスワードが一致していません。")
+
+
 class AppUserRegisterForm(forms.Form):
+    def clean(self):
+        """Formの相関チェックを行います"""
+        cleaned_data = super().clean()
+        password = cleaned_data["password"]
+        password_confirm = cleaned_data["password_confirm"]
+        validate_password(password, password_confirm)
+
     username = forms.CharField(
         max_length=50,
         required=True,

@@ -9,3 +9,16 @@ export function factoryAxios() {
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   return axios;
 }
+
+/***
+ * 受け取った文字列がブランクやnullでないかどうか検証します
+ * @param targetValue
+ */
+export function isNotBlank(targetValue: string) {
+  return (
+    targetValue !== "" &&
+    targetValue !== "null" &&
+    targetValue !== null &&
+    targetValue !== undefined
+  );
+}
