@@ -25,9 +25,7 @@ class Project(models.Model):
     status = models.CharField(
         max_length=10, choices=consts.CHOICES_PROJECT_STATUS, verbose_name="ステータス"
     )
-    explain = models.CharField(
-        max_length=1000, verbose_name="説明", blank=True, null=True
-    )
+    explain = models.TextField(verbose_name="説明", blank=True, null=True)
     thumbnail = models.FileField(
         upload_to=utils.upload_to_info, verbose_name="サムネイル", blank=True, null=True
     )

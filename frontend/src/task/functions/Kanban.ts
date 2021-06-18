@@ -1,6 +1,8 @@
 import { ToMayToMeConst } from "../const/ToMayToMeConst";
 import { ProjectTask } from "../interfaces/ProjectTask";
+import { JKanbanTask } from "../interfaces/JKanbanTask";
 import TaskService from "../services/TaskService";
+import { isNotBlank } from "./Utility";
 
 /***
  * カンバンのボードIDからステータスコードに変換します
@@ -62,7 +64,13 @@ export function parseTaskModelToBoardItem(projectTaskList: ProjectTask[]) {
       if (isStatusCdEqualsBoardId(task.status, _boardId)) {
         const taskObj = {
           id: `${_boardId}-${task.id}`,
-          title: task.name,
+          title: `
+          <div class="box is-align-content-end">
+            <button id='pomodorobtn-${_boardId}-${task.id}' class='button is-rounded is-danger is-small'>T</button>
+            <div>${task.name}</div>
+          </div>
+          `,
+          name: task.name, // jKanban Dataset用
           status: task.status,
           start_date_time: task.start_date_time,
           end_date_time: task.end_date_time,
@@ -135,4 +143,30 @@ export async function refresh(projectId: string | string[]) {
   } catch (e) {
     console.error(e);
   }
+}
+
+/***
+ * カンバンタスクからアプリケーションのProjectTaskに変換します
+ * @param {JKanbanTask} jKanbanTask
+ * @return {ProjectTask} projectTask
+ */
+export function parseJKanbanTaskToProjectTask(jKanbanTask: JKanbanTask) {
+  let startDateTimeStr = jKanbanTask.start_date_time;
+  let endDateTimeStr = jKanbanTask.end_date_time;
+
+  const projectTask: ProjectTask = {
+    id: jKanbanTask.eid.split("-")[1],
+    name: jKanbanTask.name,
+    title: jKanbanTask.name,
+    status: jKanbanTask.status,
+    // 開始時刻、終了時刻が有効な日付であれば日付を渡し、それ以外はnullとする
+    start_date_time: isNotBlank(startDateTimeStr)
+      ? new Date(startDateTimeStr)
+      : null,
+    end_date_time: isNotBlank(endDateTimeStr) ? new Date(endDateTimeStr) : null,
+    memo: jKanbanTask.memo,
+    project: jKanbanTask.project,
+    order_no: jKanbanTask.order_no,
+  };
+  return projectTask;
 }

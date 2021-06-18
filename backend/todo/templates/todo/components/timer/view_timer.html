@@ -1,0 +1,45 @@
+<!-- ポモドーロタイマー -->
+<style>
+body {
+    padding-bottom: 800px;
+}
+.time-lane-lg {
+    top: 0;
+    overflow-y: auto;
+}
+.time-lane {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1999;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    display: none;
+    padding: 18px 18px 30px;
+}
+
+#pomodoro_timer .values {
+    font-size: 3.5rem;
+}
+
+</style>
+<div class="time-lane">
+    <div class="columns">
+        <div class="column">
+            Settings
+        </div>
+        <div class="column is-half has-text-centered">
+            <div id="pomodoro_timer">
+                <div class="values">00:00:00</div>
+                <button id="pause_pomodoro" class="button is-rounded is-light is-small">一時停止</button>
+                <button id="break_pomodoro" class="button is-rounded is-primary is-small" disabled>休憩</button>
+                <button id="resume_pomodoro" class="button is-rounded is-primary is-small is-hidden">再開</button>
+                <button id="exit_pomodoro" class="button is-rounded is-danger is-small">終了</button>
+            </div>
+        </div>
+        <div class="column has-text-right">
+            <a id="scaleup_pomodoro_timer"><i class="fas fa-angle-double-up"></i></a>
+        </div>
+    </div>
+</div>
