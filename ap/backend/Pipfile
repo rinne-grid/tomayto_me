@@ -10,6 +10,9 @@ black = "==v20.8b1"
 redis = "*"
 psycopg2 = "*"
 django-redis-sessions = "*"
+gunicorn = "*"
+django-rest-framework = "*"
+django-extensions = "*"
 
 [dev-packages]
 django-extensions = "*"
@@ -17,3 +20,6 @@ ipython = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+start = "gunicorn config.wsgi:application"

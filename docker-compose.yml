@@ -1,5 +1,13 @@
-version: '3'
+version: "3"
 services:
+  ap:
+    build:
+      context: ./ap
+    ports:
+      - "8888:8000"
+    command: pipenv run start
+    volumes:
+      - ./ap/backend:/app/backend
   ss:
     image: redis:6.2.1
     ports:
@@ -29,3 +37,5 @@ volumes:
     driver: local
   redis-data:
     driver: local
+  # app-code:
+  #   driver: local
