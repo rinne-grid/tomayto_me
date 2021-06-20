@@ -58,6 +58,13 @@ if(document.querySelector("#kanban") !== null) {
             customHandler: "<span class='item_handle'><i class='fas fa-plus'></i></span> %s"// your entirely customized handler. Use %s to position item title
         },
         click: function (el) {
+            const projectTask = window.parseJKanbanTaskToProjectTask(el.dataset);
+            $("[name=edit_task_name]").val(projectTask.name);
+            $("[name=edit_memo]").val(projectTask.memo);
+            $("[name=edit_start_date_time]").val(projectTask.start_date_time);
+            $("[name=edit_end_date_time]").val(projectTask.end_date_time);
+            console.log(projectTask);
+            // detail_task.htmlに然るべき値を設定する
         },                             // callback when any board's item are clicked
         dragEl: function (el, source) {
         },                     // callback when any board's item are dragged
@@ -78,9 +85,9 @@ if(document.querySelector("#kanban") !== null) {
                 const newDataSet = {
                     id: itemId,
                     title: `
-                      <div class="box is-align-content-end">
-                        <button id='pomodorobtn-${itemId}' class='button is-rounded is-danger is-small'>T</button>
-                        <div>${el.dataset.name}</div>
+                      <div class="box is-align-content-end rngd_button-modal--open" data-target="rngd_modal--detail_task">
+                        <button id='pomodorobtn-${itemId}' class='button is-rounded is-danger is-small'>T</button><br>
+                        ${el.dataset.name}
                       </div>
                       `,
                     name: el.dataset.name,
@@ -135,4 +142,6 @@ if(document.querySelector("#kanban") !== null) {
     });
 }
 $(".kanban-title-button").attr("data-target", "rngd_modal--task")
+{#$(".kanban-item").attr("data-target", "rngd_modal--detail_task");#}
+{#$(".kanban-item").addClass("rngd_button-modal--open");#}
 </script>

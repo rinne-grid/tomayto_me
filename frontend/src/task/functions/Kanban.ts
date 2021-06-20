@@ -3,7 +3,7 @@ import { ProjectTask } from "../interfaces/ProjectTask";
 import { JKanbanTask } from "../interfaces/JKanbanTask";
 import TaskService from "../services/TaskService";
 import { isNotBlank } from "./Utility";
-
+import { Window } from "../../@types/window";
 /***
  * カンバンのボードIDからステータスコードに変換します
  * @param boardId
@@ -65,9 +65,9 @@ export function parseTaskModelToBoardItem(projectTaskList: ProjectTask[]) {
         const taskObj = {
           id: `${_boardId}-${task.id}`,
           title: `
-          <div class="box is-align-content-end">
-            <button id='pomodorobtn-${_boardId}-${task.id}' class='button is-rounded is-danger is-small'>T</button>
-            <div>${task.name}</div>
+          <div class="box is-align-content-end rngd_button-modal--open" data-target="rngd_modal--detail_task">
+            <button id='pomodorobtn-${_boardId}-${task.id}' class='button is-rounded is-danger is-small'>T</button><br>
+            ${task.name}
           </div>
           `,
           name: task.name, // jKanban Dataset用
@@ -153,6 +153,7 @@ export async function refresh(projectId: string | string[]) {
 export function parseJKanbanTaskToProjectTask(jKanbanTask: JKanbanTask) {
   let startDateTimeStr = jKanbanTask.start_date_time;
   let endDateTimeStr = jKanbanTask.end_date_time;
+  let memo = jKanbanTask.memo;
 
   const projectTask: ProjectTask = {
     id: jKanbanTask.eid.split("-")[1],
@@ -164,9 +165,13 @@ export function parseJKanbanTaskToProjectTask(jKanbanTask: JKanbanTask) {
       ? new Date(startDateTimeStr)
       : null,
     end_date_time: isNotBlank(endDateTimeStr) ? new Date(endDateTimeStr) : null,
-    memo: jKanbanTask.memo,
+    memo: isNotBlank(memo) ? memo : null,
     project: jKanbanTask.project,
     order_no: jKanbanTask.order_no,
   };
   return projectTask;
 }
+
+declare var window: Window;
+
+window.parseJKanbanTaskToProjectTask = parseJKanbanTaskToProjectTask;

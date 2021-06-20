@@ -22,7 +22,7 @@ $(function() {
     //---------------------------------------------------------------------------------------------------------------------------------
     // clickNameOpenTriggerButtonクラスのクリックイベント発火時に、dataTargetで指定されたクラス要素にis-activeクラスを追加します
     //---------------------------------------------------------------------------------------------------------------------------------
-    $(`.${classNameOpenTriggerButton}`).on("click", (obj) => {
+    $(document).on("click", `.${classNameOpenTriggerButton}`, (obj) => {
         const dataTarget = getDataTarget(obj);
         $(`.${dataTarget}`).addClass("is-active");
     });
@@ -30,7 +30,7 @@ $(function() {
     //---------------------------------------------------------------------------------------------------------------------------------
     // classNameCloseTriggerButtonクラスのクリックイベント発火時に、dataTargetで指定されたからis-activeクラスを削除します
     //---------------------------------------------------------------------------------------------------------------------------------
-    $(`.${classNameCloseTriggerButton}`).on("click", (obj) =>{
+    $(document).on("click", `.${classNameCloseTriggerButton}`, (obj) =>{
         const dataTarget = getDataTarget(obj);
         $(`.${dataTarget}`).removeClass("is-active");
     })

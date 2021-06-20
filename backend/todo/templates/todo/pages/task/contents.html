@@ -17,7 +17,10 @@
 {% endblock %}
 
 {% block contents %}
+{# タスク作成モーダル #}
 {% include "todo/components/task/create_task.html" %}
+{# タスク詳細モーダル #}
+{% include "todo/components/task/detail_task.html" %}
 
 <div class="column">
     <div class="m-4 columns">

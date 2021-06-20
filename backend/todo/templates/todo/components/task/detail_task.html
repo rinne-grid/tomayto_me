@@ -1,0 +1,48 @@
+{% load static %}
+{# モーダルダイアログ：タスク詳細--開始 #}
+<div class="modal rngd_modal--detail_task">
+  <div class="modal-background rngd_button-modal--close" data-target="rngd_modal--detail_task"></div>
+  <div class="modal-content">
+    <div class="box">
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>タスクを編集</p>
+                </div>
+                <div class="message-body">
+                    <div class="field">
+                        <label class="label">タスク名</label>
+                        <div class="control">
+                            <input class="input" type="text" name="edit_task_name" placeholder="タスク名" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="edit_start_date_time">開始日</label>
+                        <div class="control">
+                            <input class="input" type="text" name="edit_start_date_time" placeholder="開始日">
+                        </div>
+                        <label class="label" for="edit_end_date_time">終了日</label>
+                        <div class="control">
+                            <input class="input" type="text" name="edit_end_date_time" placeholder="終了日">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">メモ</label>
+                        <div class="control">
+                            <textarea class="textarea" name="edit_memo" placeholder="メモ"></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="buttons">
+                            <button class="button is-white rngd_button-modal--close" id="todo_task_detail_cancel_btn" data-target="rngd_modal--detail_task">キャンセル</button>
+                            <button class="button is-info" id="todo_task_detail_ok_btn">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+    </div>
+  </div>
+  <button class="modal-close is-large rngd_button-modal--close" data-target="rngd_modal--detail_task" aria-label="close"></button>
+</div>
+{# OKボタンクリック時に、axiosでタスク編集のリクエストを送信する #}
+{# モーダルダイアログ：タスク詳細--終了 #}
