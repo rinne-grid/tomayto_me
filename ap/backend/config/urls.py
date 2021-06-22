@@ -15,9 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-from config import settings
-
+import os
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,7 +23,7 @@ urlpatterns = [
     path("api/", include("api.urls")),
 ]
 
-if settings.DEBUG:
+if os.environ.get("DJANGO_SETTINGS_MODULE") in "local":
     import debug_toolbar
 
     urlpatterns.append(path("__debug__", include(debug_toolbar.urls)))

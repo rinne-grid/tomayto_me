@@ -5,15 +5,20 @@ name = "pypi"
 
 [packages]
 django = "*"
-django-debug-toolbar = "*"
-black = "==v20.8b1"
 redis = "*"
 psycopg2 = "*"
 django-redis-sessions = "*"
+django-rest-framework = "*"
+gunicorn = "*"
 
 [dev-packages]
 django-extensions = "*"
 ipython = "*"
+black = "==v20.8b1"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+start = "gunicorn config.wsgi:application"

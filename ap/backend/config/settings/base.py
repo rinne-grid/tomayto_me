@@ -14,7 +14,7 @@ from pathlib import Path
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the components like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,11 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
     "todo.apps.TodoConfig",
     "api.apps.ApiConfig",
     "rest_framework",
-    "django_extensions",
 ]
 
 
@@ -55,7 +53,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -184,13 +181,3 @@ LOGGING = {
         },
     },
 }
-
-if DEBUG:
-    import mimetypes
-
-    mimetypes.add_type("application/javascript", ".js", True)
-    INTERNAL_IPS = ["127.0.0.1"]
-
-    # django_extensions shell_plus
-    # python manage.py shell_plus --print-sql
-    SHELL_PLUS_PRINT_SQL = True

@@ -1,5 +1,15 @@
-version: '3'
+version: "3"
 services:
+  ap_staging:
+    build:
+      context: ./ap
+    ports:
+      - "8888:8000"
+    command: pipenv run start
+    volumes:
+      - ./ap/backend:/app/backend
+    environment:
+      DJANGO_SETTINGS_MODULE: "config.settings.staging"
   ss:
     image: redis:6.2.1
     ports:
