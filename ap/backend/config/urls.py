@@ -23,7 +23,8 @@ urlpatterns = [
     path("api/", include("api.urls")),
 ]
 
-if os.environ.get("DJANGO_SETTINGS_MODULE") in "local":
+settings_module = os.environ.get("DJANGO_SETTINGS_MODULE")
+if "local" in settings_module or settings_module == "":
     import debug_toolbar
 
     urlpatterns.append(path("__debug__", include(debug_toolbar.urls)))
