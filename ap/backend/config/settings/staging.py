@@ -15,6 +15,7 @@ DATABASES = {
 DEBUG = False
 
 STATIC_URL = "/static/"
+STATIC_ROOT = "/app/backend/static"
 
 SESSION_ENGINE = "redis_sessions.session"
 SESSION_REDIS = {

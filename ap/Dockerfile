@@ -8,9 +8,13 @@ ENV PATH="${PATH}:/app/backend"
 WORKDIR /app/backend
 ADD ./backend /app/backend
 
+# rsync: staticファイルをWebサーバーにコピーする際に利用する
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y rsync
 
 RUN pip install pipenv && \
-    pipenv install
+    pipenv sync
 
 
 # 作成した秘密鍵をAPサーバーに配置する

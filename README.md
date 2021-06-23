@@ -61,4 +61,7 @@ $ npx webpack -w
 ```shell
 $ ssh-keygen -t ed25519 -f ./ap/fabric_settings/ssh/id_ed25519
 $ mv ./ap/fabric_settings/ssh/id_ed25519.pub ./web/ssh
+# docker exec tomayto_me_ap_staging_1 pipenv run fab test -f fabric_settings/fabfile.py
+#$ docker compose exec ap_staging pipenv run fab collectstatic -f fabric_settings/fabfile.py
+$ docker compose exec ap_staging pipenv run collectstatic
 ```

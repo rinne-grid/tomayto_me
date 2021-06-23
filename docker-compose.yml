@@ -37,13 +37,17 @@ services:
   web:
     build:
       context: ./web
-    image: nginx:stable
+    # image: nginx:stable
     volumes:
       - ./web/nginx.conf:/etc/nginx/nginx.conf:ro
+      - web-data:/var/www/app
     ports:
       - "8880:80"
+
 volumes:
   postgres-db:
     driver: local
   redis-data:
+    driver: local
+  web-data:
     driver: local

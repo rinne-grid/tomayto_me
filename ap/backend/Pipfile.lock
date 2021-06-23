@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "706db30109963dd4e951862a592060c0377d7812f577302d766ff7f45f0154f0"
+            "sha256": "d4e2a62226a9d7a7ec9eeabafe2c8142079188a4a566ca70c48f4bdaec3c3dd1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -140,13 +140,13 @@
             "markers": "python_version >= '3.5'",
             "version": "==3.12.4"
         },
-        "fabric": {
+        "fabric3": {
             "hashes": [
-                "sha256:47f184b070272796fd2f9f0436799e18f2ccba4ee8ee587796fca192acd46cd2",
-                "sha256:7a71714b8b8f28cf828eceb155196f43ebac1bd4c849b7161ed5993d1cbcaa40"
+                "sha256:647e485ec83f30b587862f92374d6affc217f3d79819d1d7f512e42e7ae51e81",
+                "sha256:7c5a5f2eb3079eb6bd2a69931f1ca298844c730ce3fdc68111db16e8857a0408"
             ],
             "index": "pypi",
-            "version": "==2.6.0"
+            "version": "==1.14.post1"
         },
         "gunicorn": {
             "hashes": [
@@ -156,27 +156,12 @@
             "index": "pypi",
             "version": "==20.1.0"
         },
-        "invoke": {
-            "hashes": [
-                "sha256:7e44d98a7dc00c91c79bac9e3007276965d2c96884b3c22077a9f04042bd6d90",
-                "sha256:da7c2d0be71be83ffd6337e078ef9643f41240024d6b2659e7b46e0b251e339f",
-                "sha256:f0c560075b5fb29ba14dad44a7185514e94970d1b9d57dcd3723bec5fed92650"
-            ],
-            "version": "==1.5.0"
-        },
         "paramiko": {
             "hashes": [
                 "sha256:4f3e316fef2ac628b05097a637af35685183111d4bc1b5979bd397c2ab7b5898",
                 "sha256:7f36f4ba2c0d81d219f4595e35f70d56cc94f9ac40a6acdf51d6ca210ce65035"
             ],
             "version": "==2.7.2"
-        },
-        "pathlib2": {
-            "hashes": [
-                "sha256:0ec8205a157c80d7acc301c0b18fbd5d44fe655968f5d947b6ecef5290fc35db",
-                "sha256:6cd9a47b597b37cc57de1c05e56fb1a1c9cc9fab04fe78c29acd090418529868"
-            ],
-            "version": "==2.3.5"
         },
         "psycopg2": {
             "hashes": [
