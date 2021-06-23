@@ -10,6 +10,7 @@ psycopg2 = "*"
 django-redis-sessions = "*"
 django-rest-framework = "*"
 gunicorn = "*"
+fabric = "*"
 
 [dev-packages]
 django-extensions = "*"

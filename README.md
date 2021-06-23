@@ -55,3 +55,10 @@ $ npx webpack -w
 
 - DB: postgresql
 - セッションエンジン: REDIS
+
+## ステージング用 AP サーバーと Web を利用する場合
+
+```shell
+$ ssh-keygen -t ed25519 -f ./ap/fabric_settings/ssh/id_ed25519
+$ mv ./ap/fabric_settings/ssh/id_ed25519.pub ./web/ssh
+```
