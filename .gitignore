@@ -331,3 +331,6 @@ id_ed25519.pub
 id_rsa
 id_rsa.pub
 .env
+
+ap/backend/static/
+ap/backend/static/*

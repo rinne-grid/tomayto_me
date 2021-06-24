@@ -1,16 +1,22 @@
-import mimetypes
+import os
+import environ
 from .base import *
 
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, ".env"))
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "USER": "admin",
-        "PASSWORD": "admin",
-        "NAME": "tomayto_me",
-        "HOST": "db",
-        "PORT": "5432",
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "USER": "admin",
+    #     "PASSWORD": "admin",
+    #     "NAME": "tomayto_me",
+    #     "HOST": "db",
+    #     "PORT": "5432",
+    # }
+    "default": env.db()
 }
+
+SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = False
 
