@@ -1,0 +1,21 @@
+{% load static %}
+<script src="{% static 'todo/js/lib/bulma-calendar.min.js' %}"></script>
+<script>
+    const options = {
+        "type": "datetime",
+        "dateFormat": "yyyy-MM-dd",
+        "timeFormat": "HH:mm",
+        "displayMode": "dialog",
+        "clearLabel": "クリア",
+        "cancelLabel": "キャンセル",
+        "todayLabel": "現在時刻",
+        "nowLabel": "現在時刻",
+        "validateLabel": "決定",
+        "closeOnSelect": true,
+        "showHeader": false,
+        "color": "info",
+        "lang": navigator.language.substring(0, 2) || "ja"
+    }
+    bulmaCalendar.attach("[type=date]", options);
+    $("[id*=datetimePicker]").css("backgroundColor", "#FFF");
+</script>

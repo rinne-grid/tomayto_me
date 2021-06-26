@@ -3,6 +3,7 @@ import * as DOMStore from "./functions/DOMStore";
 import $ from "cash-dom";
 import * as Kanban from "./functions/Kanban";
 import { ProjectTask } from "./interfaces/ProjectTask";
+import { getDetailTask } from "./functions/DOMStore";
 
 $(() => {
   const projectId = DOMStore.getProjectId();
@@ -41,8 +42,18 @@ $(() => {
         });
     }
   });
-
-  $("[id^=pomodorobtn]").on("click", (elem: any) => {
-    console.debug(elem);
+  $("#todo_task_detail_ok_btn").on("click", () => {
+    const projectTask: ProjectTask = DOMStore.getDetailTask();
+    projectTask.project = projectId;
+    taskService
+      .updateProjectTask(projectTask)
+      .then(() => {
+        Kanban.refresh(projectId)
+          .then(() => {})
+          .catch((error) => console.error(error.response));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 });

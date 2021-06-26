@@ -33,4 +33,19 @@ export default class TaskService extends WebAPIService {
       }
     );
   }
+
+  /***
+   * 詳細画面から受け取ったタスク情報を元に、対象タスクの情報を更新します
+   */
+  public updateProjectTask(task: ProjectTask): Promise<any> {
+    return this.axios.put(
+      `${ToMayToMeConst.API_END_POINT_TASKS_CRUD}/${task.project}/tasks/${task.id}/update/`,
+      {
+        name: task.name,
+        start_date_time: task.start_date_time,
+        end_date_time: task.end_date_time,
+        memo: task.memo,
+      }
+    );
+  }
 }

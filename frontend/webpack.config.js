@@ -5,10 +5,10 @@ module.exports = {
     timer: `${__dirname}/src/timer/index.ts`,
   },
   output: {
-    path: `${__dirname}/../backend/todo/static/dist`,
+    path: `${__dirname}/../ap/backend/todo/static/dist`,
   },
   devServer: {
-    contentBase: `${__dirname}/../backend/todo/static/dist`,
+    contentBase: `${__dirname}/../ap/backend/todo/static/dist`,
   },
   module: {
     rules: [
