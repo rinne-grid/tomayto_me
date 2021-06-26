@@ -2,7 +2,7 @@ import { ToMayToMeConst } from "../const/ToMayToMeConst";
 import { ProjectTask } from "../interfaces/ProjectTask";
 import { JKanbanTask } from "../interfaces/JKanbanTask";
 import TaskService from "../services/TaskService";
-import { isNotBlank } from "./Utility";
+import { isExistDiffProjectKanbanTask, isNotBlank } from "./Utility";
 import { Window } from "../../@types/window";
 /***
  * カンバンのボードIDからステータスコードに変換します
@@ -118,9 +118,20 @@ export function addBoardDataToKanban(taskBoardHash: {
       taskBoardHash[key].forEach((taskObj) => {
         // ボードに存在しないものデータのみを追加対象とする
         // @ts-ignore
-        if (window.kanban.findElement(taskObj.id) === null) {
+        const taskElem = window.kanban.findElement(taskObj.id);
+        if (taskElem === null) {
           // @ts-ignore
           window.kanban.addElement(key, taskObj);
+        } else {
+          const kanbanProjectTask = parseJKanbanTaskToProjectTask(
+            taskElem.dataset
+          );
+          // console.debug(taskObj, kanbanProjectTask);
+          // if (isExistDiffProjectKanbanTask(taskObj, kanbanProjectTask)) {
+          // TODO: 内容が異なる場合のみエレメントの更新を行う
+          // @ts-ignore
+          window.kanban.replaceElement(taskObj.id, taskObj);
+          // }
         }
       });
     }

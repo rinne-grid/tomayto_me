@@ -59,11 +59,12 @@ if(document.querySelector("#kanban") !== null) {
         },
         click: function (el) {
             const projectTask = window.parseJKanbanTaskToProjectTask(el.dataset);
-            $("[name=edit_task_name]").val(projectTask.name);
-            $("[name=edit_memo]").val(projectTask.memo);
-            $("[name=edit_start_date_time]").val(projectTask.start_date_time);
-            $("[name=edit_end_date_time]").val(projectTask.end_date_time);
+            {#$("#edit_task_name").val(projectTask.name);#}
+            {#$("#edit_memo").val(projectTask.memo);#}
+            {#$("#edit_start_date_time").val(projectTask.start_date_time);#}
+            {#$("#edit_end_date_time").val(projectTask.end_date_time);#}
             console.log(projectTask);
+            window.setDetailTask(projectTask);
             // detail_task.htmlに然るべき値を設定する
         },                             // callback when any board's item are clicked
         dragEl: function (el, source) {

@@ -3,4 +3,5 @@ import { ProjectTask } from "../task/interfaces/ProjectTask";
 
 interface Window {
   parseJKanbanTaskToProjectTask(jKanbanTask: JKanbanTask): ProjectTask;
+  setDetailTask(projectTask: ProjectTask): void;
 }

@@ -3,7 +3,7 @@
 <script>
     const options = {
         "type": "datetime",
-        "dateFormat": "YYYY-MM-DD",
+        "dateFormat": "yyyy-MM-dd",
         "timeFormat": "HH:mm",
         "displayMode": "dialog",
         "clearLabel": "クリア",
@@ -14,6 +14,7 @@
         "closeOnSelect": true,
         "showHeader": false,
         "color": "info",
+        "lang": navigator.language.substring(0, 2) || "ja"
     }
     bulmaCalendar.attach("[type=date]", options);
     $("[id*=datetimePicker]").css("backgroundColor", "#FFF");
