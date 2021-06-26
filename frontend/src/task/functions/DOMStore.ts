@@ -1,4 +1,7 @@
 import $ from "cash-dom";
+import { ProjectTask } from "../interfaces/ProjectTask";
+import { getDateStr, getTimeStr, isNotBlank } from "./Utility";
+import { Window } from "../../@types/window";
 
 /***
  * 現在表示しているプロジェクトのIDを返します
@@ -32,3 +35,51 @@ export function clearRegisterForm() {
   $("[name=todo_tasks]").val("");
   $("#todo_tasks_cancel_btn")[0].click();
 }
+
+/***
+ * 詳細画面のタスクを取得します
+ */
+export function getDetailTask(): ProjectTask {
+  let startDateTime = $("#edit_start_date_time").val() as string;
+  let endDateTime = $("#edit_end_date_time").val() as string;
+  const projectTask: ProjectTask = {
+    id: $("#edit_task_id").val() as string,
+    name: $("#edit_task_name").val() as string,
+    memo: $("#edit_memo").val() as string,
+    start_date_time: isNotBlank(startDateTime) ? new Date(startDateTime) : null,
+    end_date_time: isNotBlank(endDateTime) ? new Date(endDateTime) : null,
+  };
+  return projectTask;
+}
+
+declare var window: Window;
+/***
+ * 詳細画面のタスクを設定します
+ */
+export function setDetailTask(projectTask: ProjectTask) {
+  $("#edit_task_id").val(projectTask.id);
+  $("#edit_task_name").val(projectTask.name);
+  $("#edit_memo").val(projectTask.memo);
+
+  const startDateElem = document.querySelector("#edit_start_date_time");
+  const endDateElem = document.querySelector("#edit_end_date_time");
+
+  // @ts-ignore
+  startDateElem.bulmaCalendar.date.start = projectTask.start_date_time;
+  // @ts-ignore
+  startDateElem.bulmaCalendar.time.start = projectTask.start_date_time;
+  // @ts-ignore
+  startDateElem.bulmaCalendar.save();
+
+  // const endDateStr = getDateStr(projectTask.end_date_time);
+  // const endDateTimeStr = getTimeStr(projectTask.end_date_time);
+
+  // @ts-ignore
+  endDateElem.bulmaCalendar.date.start = projectTask.end_date_time;
+  // @ts-ignore
+  endDateElem.bulmaCalendar.time.start = projectTask.end_date_time;
+  // @ts-ignore
+  endDateElem.bulmaCalendar.save();
+}
+
+window.setDetailTask = setDetailTask;

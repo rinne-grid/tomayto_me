@@ -1,0 +1,6 @@
+Host web
+    HostName web
+    User root
+    Port 22222
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519

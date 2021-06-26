@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+redis = "*"
+psycopg2 = "*"
+django-redis-sessions = "*"
+django-rest-framework = "*"
+gunicorn = "*"
+fabric3 = "*"
+django-environ = "*"
+
+[dev-packages]
+django-extensions = "*"
+ipython = "*"
+black = "==v20.8b1"
+django-debug-toolbar = "*"
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+start = "gunicorn config.wsgi:application"
+collectstatic = "fab collectstatic -f fabric_settings/fabfile.py"
