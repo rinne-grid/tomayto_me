@@ -1,5 +1,7 @@
 export class ToMayToMeConst {
-  public static API_END_POINT_TASKS_CRUD = "/api/projects";
+  public static API_END_POINT_ROOT = "/api";
+  public static API_END_POINT_TASKS_CRUD = `${ToMayToMeConst.API_END_POINT_ROOT}/projects`;
+  public static API_END_POINT_USER_POMODORO_SETTING = `${ToMayToMeConst.API_END_POINT_ROOT}/user_pomodoro_setting`;
   public static BOARD_ID_TODO = "todo_board";
   public static BOARD_ID_WORKING = "working_board";
   public static BOARD_ID_COMPLETED = "completed_board";

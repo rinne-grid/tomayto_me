@@ -1,5 +1,6 @@
 import WebAPIService from "../../common/classes/WebAPIService";
 import { ProjectTask } from "../../task/interfaces/ProjectTask";
+import { MstUserPomodoroSetting } from "../interfaces/MstUserPomodoroSetting";
 import { ToMayToMeConst } from "../../task/const/ToMayToMeConst";
 
 export default class TimerService extends WebAPIService {
@@ -16,6 +17,12 @@ export default class TimerService extends WebAPIService {
         task: taskId,
         time_minutes: timeMinutes,
       }
+    );
+  }
+
+  getUserPomodoroSetting(): Promise<any> {
+    return this.axios.get(
+      `${ToMayToMeConst.API_END_POINT_USER_POMODORO_SETTING}/`
     );
   }
 }

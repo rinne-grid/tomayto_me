@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from todo.models import Task, TaskPomodoro
+from todo.models import Task, TaskPomodoro, MstUserPomodoroSetting
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -19,3 +19,11 @@ class TaskPomodoroSerializer(serializers.ModelSerializer):
             "task",
             "time_minutes",
         )
+
+
+class MstUserPomodoroSettingSerializer(serializers.ModelSerializer):
+    """TaskUserPomodoroSettingモデル用のシリアライザクラス"""
+
+    class Meta:
+        model = MstUserPomodoroSetting
+        fields = "__all__"

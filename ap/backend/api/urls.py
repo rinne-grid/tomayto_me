@@ -25,4 +25,9 @@ urlpatterns = [
         task_pomodoro_create_api_view,
         name="task_pomodoro_create_api_view",
     ),
+    path(
+        "user_pomodoro_setting/",
+        views.mst_user_pomodoro_setting_list_api_view,
+        name="mst_user_pomodoro_setting_list_api_view",
+    ),
 ]

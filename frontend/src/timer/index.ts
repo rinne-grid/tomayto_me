@@ -29,10 +29,24 @@ $(() => {
       const pomodoroButtonId = event.target.id;
 
       destroyPomodoroTimer();
-      pomodoroTimer = factoryPomodoroTimer(pomodoroButtonId);
-      DOMStore.changePomodoroStatus(
-        ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
-      );
+      timerService
+        .getUserPomodoroSetting()
+        .then((result) => {
+          pomodoroTimer = factoryPomodoroTimer(
+            pomodoroButtonId,
+            result.data[0].work_time
+          );
+          DOMStore.changePomodoroStatus(
+            ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+          );
+        })
+        .catch((err) => {
+          console.debug(err.message);
+        });
+      // pomodoroTimer = factoryPomodoroTimer(pomodoroButtonId);
+      // DOMStore.changePomodoroStatus(
+      //   ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+      // );
     }
   );
   // 休憩ボタンクリック時
@@ -55,12 +69,27 @@ $(() => {
         });
 
       destroyPomodoroTimer();
-      pomodoroTimer = factoryPomodoroTimerBreakTime(targetTask);
+
+      timerService
+        .getUserPomodoroSetting()
+        .then((result) => {
+          pomodoroTimer = factoryPomodoroTimerBreakTime(
+            targetTask,
+            result.data[0].short_break_time
+          );
+          // 休憩状態に変更する
+          DOMStore.changePomodoroStatus(
+            ToMayToMeConst.POMODORO_STATUS_TIME_BREAKING
+          );
+        })
+        .catch((err) => {});
+
+      // pomodoroTimer = factoryPomodoroTimerBreakTime(targetTask);
 
       // 休憩状態に変更する
-      DOMStore.changePomodoroStatus(
-        ToMayToMeConst.POMODORO_STATUS_TIME_BREAKING
-      );
+      // DOMStore.changePomodoroStatus(
+      //   ToMayToMeConst.POMODORO_STATUS_TIME_BREAKING
+      // );
     }
   );
   // 再開ボタンクリック時
@@ -74,11 +103,25 @@ $(() => {
         targetTask = pomodoroTimer.getTargetTask();
         pomodoroTimer.destroy();
       }
-      pomodoroTimer = factoryPomodoroTimerFromProjectTask(targetTask);
-      // 作業中状態に変更する
-      DOMStore.changePomodoroStatus(
-        ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
-      );
+      timerService
+        .getUserPomodoroSetting()
+        .then((result) => {
+          pomodoroTimer = factoryPomodoroTimerFromProjectTask(
+            targetTask,
+            result.data[0].work_time
+          );
+          // 作業中状態に変更する
+          DOMStore.changePomodoroStatus(
+            ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+          );
+        })
+        .catch((err) => {});
+
+      // pomodoroTimer = factoryPomodoroTimerFromProjectTask(targetTask);
+      // // 作業中状態に変更する
+      // DOMStore.changePomodoroStatus(
+      //   ToMayToMeConst.POMODORO_STATUS_TIME_WORKING
+      // );
     }
   );
   // 一時停止ボタンクリック時

@@ -1,0 +1,1 @@
+[{"model": "todo.mstpomodorosetting", "pk": 1, "fields": {"work_time": 25, "short_break_time": 5, "long_break_time": 20, "long_break_pomodoro": 2}}]

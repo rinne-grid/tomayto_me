@@ -7,7 +7,7 @@ from django.views.generic import View, TemplateView
 from django.core.exceptions import ValidationError
 
 from .forms import AppLoginForm, AppUserRegisterForm
-from .models import AppUser
+from .models import AppUser, MstPomodoroSetting, MstUserPomodoroSetting
 
 
 class AppIndexView(TemplateView):
@@ -59,6 +59,22 @@ class AppUserRegisterView(View):
 
                 user.email = cleaned_data["email"]
                 user.save()
+                # ポモドーロのマスタ設定（テンプレート）をユーザ設定として作成する
+                mst_setting_instance = MstPomodoroSetting.objects.all()[0]
+                user_setting_instance = MstUserPomodoroSetting()
+                user_setting_instance.user = user
+                user_setting_instance.work_time = mst_setting_instance.work_time
+                user_setting_instance.short_break_time = (
+                    mst_setting_instance.short_break_time
+                )
+                user_setting_instance.long_break_time = (
+                    mst_setting_instance.long_break_time
+                )
+                user_setting_instance.long_break_pomodoro = (
+                    mst_setting_instance.long_break_pomodoro
+                )
+                user_setting_instance.save()
+
                 # ここですでにユーザ情報が取得できているためauthenticateは不要
                 # 実施しようとすると、loginの部分で
                 # AttributeError: 'AnonymousUser' object has no attribute '_meta'が発生する

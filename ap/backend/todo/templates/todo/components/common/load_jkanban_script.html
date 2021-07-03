@@ -63,7 +63,7 @@ if(document.querySelector("#kanban") !== null) {
             {#$("#edit_memo").val(projectTask.memo);#}
             {#$("#edit_start_date_time").val(projectTask.start_date_time);#}
             {#$("#edit_end_date_time").val(projectTask.end_date_time);#}
-            console.log(projectTask);
+            {#console.log(projectTask);#}
             window.setDetailTask(projectTask);
             // detail_task.htmlに然るべき値を設定する
         },                             // callback when any board's item are clicked

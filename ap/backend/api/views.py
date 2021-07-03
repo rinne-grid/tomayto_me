@@ -2,8 +2,12 @@ from rest_framework import generics
 from rest_framework import permissions
 from django.http.response import HttpResponseForbidden, HttpResponse
 from django.db import transaction
-from api.serializers import TaskSerializer, TaskPomodoroSerializer
-from todo.models import Task, Project, ProjectMember
+from api.serializers import (
+    TaskSerializer,
+    TaskPomodoroSerializer,
+    MstUserPomodoroSettingSerializer,
+)
+from todo.models import Task, Project, ProjectMember, MstUserPomodoroSetting
 from todo.utils import has_user_access_project
 
 
@@ -124,6 +128,15 @@ class TaskPomodoroCreateAPIView(generics.CreateAPIView):
             return HttpResponseForbidden()
 
 
+class MstUserPomodoroSettingListAPIView(generics.ListAPIView):
+    serializer_class = MstUserPomodoroSettingSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        print(self.request.user)
+        return MstUserPomodoroSetting.objects.filter(user=self.request.user)
+
+
 # タスク作成及び取得ビュー
 task_list_create_api_view = TaskListCreateAPIView.as_view()
 # タスク更新ビュー
@@ -132,3 +145,6 @@ task_retrieve_update_destroy_view = TaskRetrieveUpdateDestroyAPIView.as_view()
 task_list_update_api_view = TaskListUpdateAPIView.as_view()
 # タスクポモドーロ登録ビュー
 task_pomodoro_create_api_view = TaskPomodoroCreateAPIView.as_view()
+
+# ポモドーロユーザ設定マスタ取得ビュー
+mst_user_pomodoro_setting_list_api_view = MstUserPomodoroSettingListAPIView.as_view()
