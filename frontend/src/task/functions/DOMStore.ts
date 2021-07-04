@@ -2,6 +2,7 @@ import $ from "cash-dom";
 import { ProjectTask } from "../interfaces/ProjectTask";
 import { getDateStr, getTimeStr, isNotBlank } from "./Utility";
 import { Window } from "../../@types/window";
+import TaskService from "../services/TaskService";
 
 /***
  * 現在表示しているプロジェクトのIDを返します
@@ -57,6 +58,21 @@ declare var window: Window;
  * 詳細画面のタスクを設定します
  */
 export function setDetailTask(projectTask: ProjectTask) {
+  // タスクポモドーロ一覧を取得する
+  const taskService = new TaskService();
+  taskService
+    .getTaskPomodoroList(projectTask)
+    .then((result) => {
+      console.debug(result.data);
+      $("#pomodoro_list").empty();
+      result.data.forEach((pomodoroObj: any) => {
+        $("#pomodoro_list").append(
+          `<div class='pomodoro_list_icon'>${pomodoroObj.time_minutes}</div>`
+        );
+      });
+    })
+    .catch((err) => {});
+
   $("#edit_task_id").val(projectTask.id);
   $("#edit_task_name").val(projectTask.name);
   $("#edit_memo").val(projectTask.memo);
@@ -70,9 +86,6 @@ export function setDetailTask(projectTask: ProjectTask) {
   startDateElem.bulmaCalendar.time.start = projectTask.start_date_time;
   // @ts-ignore
   startDateElem.bulmaCalendar.save();
-
-  // const endDateStr = getDateStr(projectTask.end_date_time);
-  // const endDateTimeStr = getTimeStr(projectTask.end_date_time);
 
   // @ts-ignore
   endDateElem.bulmaCalendar.date.start = projectTask.end_date_time;

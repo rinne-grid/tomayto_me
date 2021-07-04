@@ -58,20 +58,18 @@ if(document.querySelector("#kanban") !== null) {
             customHandler: "<span class='item_handle'><i class='fas fa-plus'></i></span> %s"// your entirely customized handler. Use %s to position item title
         },
         click: function (el) {
+            // 詳細画面に対象タスク情報を設定する
+            // memo: modal表示制御は、modal_operations.jsでclassにrngd_button-modal--openとrngd_button-modal--closeが
+            // 指定されているものに自動的に付与する
+            // カンバンタスクのクラスにrngd_button-modal--openを指定し、data-targetに操作対象のモーダルを指定
             const projectTask = window.parseJKanbanTaskToProjectTask(el.dataset);
-            {#$("#edit_task_name").val(projectTask.name);#}
-            {#$("#edit_memo").val(projectTask.memo);#}
-            {#$("#edit_start_date_time").val(projectTask.start_date_time);#}
-            {#$("#edit_end_date_time").val(projectTask.end_date_time);#}
-            {#console.log(projectTask);#}
             window.setDetailTask(projectTask);
-            // detail_task.htmlに然るべき値を設定する
-        },                             // callback when any board's item are clicked
-        dragEl: function (el, source) {
-        },                     // callback when any board's item are dragged
-        dragendEl: function (el) {
 
-        },                             // callback when any board's item stop drag
+        },
+        dragEl: function (el, source) {
+        },
+        dragendEl: function (el) {
+        },
         dropEl: function (el, target, source, sibling) {
             console.debug("source:", source);
             console.debug("target:", target);

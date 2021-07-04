@@ -3,7 +3,6 @@ import * as DOMStore from "./functions/DOMStore";
 import $ from "cash-dom";
 import * as Kanban from "./functions/Kanban";
 import { ProjectTask } from "./interfaces/ProjectTask";
-import { getDetailTask } from "./functions/DOMStore";
 
 $(() => {
   const projectId = DOMStore.getProjectId();
@@ -16,7 +15,9 @@ $(() => {
 
   const taskService: TaskService = new TaskService();
 
+  //---------------------------------------------------------------------------
   // 作成ボタンクリック時にタスク登録を行います
+  //---------------------------------------------------------------------------
   $("#todo_tasks_create_btn").on("click", () => {
     const boardId = DOMStore.getBoardId();
     const task: ProjectTask = {
@@ -42,6 +43,9 @@ $(() => {
         });
     }
   });
+  //---------------------------------------------------------------------------
+  // タスク詳細画面のOKボタンクリック時に、対象タスクを更新します
+  //---------------------------------------------------------------------------
   $("#todo_task_detail_ok_btn").on("click", () => {
     const projectTask: ProjectTask = DOMStore.getDetailTask();
     projectTask.project = projectId;

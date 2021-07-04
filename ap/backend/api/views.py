@@ -7,7 +7,13 @@ from api.serializers import (
     TaskPomodoroSerializer,
     MstUserPomodoroSettingSerializer,
 )
-from todo.models import Task, Project, ProjectMember, MstUserPomodoroSetting
+from todo.models import (
+    Task,
+    Project,
+    ProjectMember,
+    MstUserPomodoroSetting,
+    TaskPomodoro,
+)
 from todo.utils import has_user_access_project
 
 
@@ -128,6 +134,23 @@ class TaskPomodoroCreateAPIView(generics.CreateAPIView):
             return HttpResponseForbidden()
 
 
+class TaskPomodoroListAPIView(generics.ListAPIView):
+    serializer_class = TaskPomodoroSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = "task_id"
+
+    def get_queryset(self):
+        task_id = self.kwargs["task_id"]
+        return TaskPomodoro.objects.filter(task_id=task_id)
+
+    def get(self, request, *args, **kwargs):
+        project_id = kwargs["project_id"]
+        if has_user_access_project(request.user.id, project_id):
+            return self.list(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+
 class MstUserPomodoroSettingListAPIView(generics.ListAPIView):
     serializer_class = MstUserPomodoroSettingSerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -143,8 +166,12 @@ task_list_create_api_view = TaskListCreateAPIView.as_view()
 task_retrieve_update_destroy_view = TaskRetrieveUpdateDestroyAPIView.as_view()
 # タスク一覧更新ビュー
 task_list_update_api_view = TaskListUpdateAPIView.as_view()
+
 # タスクポモドーロ登録ビュー
 task_pomodoro_create_api_view = TaskPomodoroCreateAPIView.as_view()
+
+# タスクポモドーロ一覧ビュー
+task_pomodoro_list_api_view = TaskPomodoroListAPIView.as_view()
 
 # ポモドーロユーザ設定マスタ取得ビュー
 mst_user_pomodoro_setting_list_api_view = MstUserPomodoroSettingListAPIView.as_view()

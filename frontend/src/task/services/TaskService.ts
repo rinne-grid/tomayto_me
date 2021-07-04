@@ -48,4 +48,13 @@ export default class TaskService extends WebAPIService {
       }
     );
   }
+
+  /***
+   * タスクごとのポモドーロ状況を取得します
+   */
+  public getTaskPomodoroList(task: ProjectTask): Promise<any> {
+    return this.axios.get(
+      `${ToMayToMeConst.API_END_POINT_TASKS_CRUD}/${task.project}/tasks/${task.id}/list_task_pomodoro`
+    );
+  }
 }
